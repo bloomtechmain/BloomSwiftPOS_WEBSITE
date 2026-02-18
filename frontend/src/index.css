@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+/* Removed corrupted ITC Avant Garde Gothic font - replace with valid font file if needed */
+/* @font-face {
+  font-family: 'ITC Avant Garde Gothic Demi Condensed';
+  src: url('../../../Assets/ITC Avant Garde Gothic Demi Condensed.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+} */
+
+body {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+/* Shimmer animation for loading images */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s infinite;
+}
+
+/* Image optimization utilities */
+.img-responsive {
+  max-width: 100%;
+  height: auto;
+}
+
+.img-optimized {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}

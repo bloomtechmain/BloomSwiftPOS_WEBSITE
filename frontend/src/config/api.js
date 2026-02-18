@@ -1,0 +1,8 @@
+// API Configuration
+// This file centralizes the API URL configuration to support different environments
+// In development: uses localhost
+// In production (Railway): uses the environment variable VITE_API_URL
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+export default API_URL;
