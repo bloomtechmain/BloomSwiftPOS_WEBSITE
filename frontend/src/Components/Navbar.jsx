@@ -129,9 +129,9 @@ const Navbar = () => {
                             className="flex items-center gap-3"
                         >
                             <img
-                                src="/BLOOM_SWIFT_POS_LOGO_XS_T.png"
+                                src="/Assets/newlogo.jpeg"
                                 alt="Bloom Swift POS logo"
-                                className="h-10 w-10 object-contain"
+                                className="h-10 w-10 object-cover rounded-xl"
                             />
                             <span className="text-2xl font-semibold tracking-tight text-[#0b2240] leading-tight" style={{ fontFamily: "'ITC Avant Garde Gothic Demi Condensed', sans-serif" }}>
                                 Bloom Swift POS

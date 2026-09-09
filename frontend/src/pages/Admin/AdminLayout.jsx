@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { LayoutDashboard, MessageSquare, ClipboardList, LogOut, Menu, X, MonitorSmartphone, Ticket } from 'lucide-react';
-import logo from '../../assets/BLOOM_SWIFT_POS_LOGO_TEXT__XXL-removebg-preview.png';
 import API_URL from '../../config/api';
 
 const AdminLayout = () => {
@@ -74,8 +73,8 @@ const AdminLayout = () => {
             >
                 <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
                     <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-xl bg-[#002044] flex items-center justify-center overflow-hidden shadow-md">
-                            <img src={logo} alt="Bloom Swift POS logo" className="h-8 w-8 object-contain brightness-0 invert" />
+                        <div className="h-10 w-10 rounded-xl overflow-hidden shadow-md">
+                            <img src="/Assets/newlogo.jpeg" alt="Bloom Swift POS logo" className="h-full w-full object-cover" />
                         </div>
                         <div>
                             <div className="text-xs font-semibold text-[#FF7A00] tracking-wide uppercase">

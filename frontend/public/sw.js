@@ -5,7 +5,7 @@ const IMAGE_CACHE = 'bloomswift-images-v2';
 
 const ASSETS_TO_CACHE = [
   '/',
-  '/BLOOM_SWIFT_POS_LOGO_XS_T.png',
+  '/Assets/newlogo.jpeg',
 ];
 
 // Cache duration in milliseconds
