@@ -60,16 +60,16 @@ const MyPOSRequests = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 font-['Poppins'] pt-24 pb-20">
+        <div className="min-h-screen bg-grey-light pt-24 pb-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center mb-8">
                     <div>
-                        <h1 className="text-3xl font-bold text-[#002044]">My POS Requests</h1>
+                        <h1 className="text-3xl font-bold text-navy">My POS Requests</h1>
                         <p className="text-gray-600 mt-2">Track your POS system requests and status</p>
                     </div>
                     <button
                         onClick={() => navigate('/request-pos')}
-                        className="bg-[#0055D4] hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors flex items-center gap-2"
+                        className="bg-navy hover:bg-navy-mid text-white font-semibold py-2 px-6 rounded-lg transition-colors flex items-center gap-2"
                     >
                         <Plus size={20} />
                         Submit a Request
@@ -78,7 +78,7 @@ const MyPOSRequests = () => {
 
                 {loading ? (
                     <div className="flex justify-center items-center h-64">
-                        <div className="w-10 h-10 border-4 border-[#0055D4]/30 border-t-[#0055D4] rounded-full animate-spin"></div>
+                        <div className="w-10 h-10 border-4 border-navy/30 border-t-navy rounded-full animate-spin"></div>
                     </div>
                 ) : requests.length === 0 ? (
                     <motion.div
@@ -89,13 +89,13 @@ const MyPOSRequests = () => {
                         <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 text-gray-400">
                             <ClipboardList size={40} />
                         </div>
-                        <h3 className="text-xl font-bold text-[#002044] mb-2">No requests found</h3>
+                        <h3 className="text-xl font-bold text-navy mb-2">No requests found</h3>
                         <p className="text-gray-500 mb-8 max-w-md mx-auto">
                             You haven't submitted any POS requests yet. Ready to get started?
                         </p>
                         <button
                             onClick={() => navigate('/request-pos')}
-                            className="text-[#0055D4] font-semibold hover:underline"
+                            className="text-navy font-semibold hover:underline"
                         >
                             Create your first request
                         </button>
@@ -113,7 +113,7 @@ const MyPOSRequests = () => {
                                 <div className="flex flex-col md:flex-row justify-between md:items-start gap-4 mb-4">
                                     <div>
                                         <div className="flex items-center gap-3 mb-2">
-                                            <h3 className="text-xl font-bold text-[#002044]">{req.servicetype}</h3>
+                                            <h3 className="text-xl font-bold text-navy">{req.servicetype}</h3>
                                             <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(req.status || 'Pending')}`}>
                                                 {req.status || 'Pending'}
                                             </span>
@@ -131,7 +131,7 @@ const MyPOSRequests = () => {
                                     </div>
                                 </div>
 
-                                <div className="grid md:grid-cols-2 gap-4 bg-gray-50 rounded-lg p-4 border border-gray-100">
+                                <div className="grid md:grid-cols-2 gap-4 bg-grey-light rounded-lg p-4 border border-gray-100">
                                     <div>
                                         <p className="text-xs text-gray-500 uppercase font-semibold mb-1">Company</p>
                                         <p className="text-gray-700">{req.company_name || 'N/A'}</p>

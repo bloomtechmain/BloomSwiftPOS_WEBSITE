@@ -1,64 +1,70 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Logo } from './Navbar';
+
+const FooterTitle = ({ children }) => (
+  <h3 className="font-mono text-[11px] font-bold uppercase tracking-widest text-white/45 mb-5">{children}</h3>
+);
+
+const FooterLink = ({ to, href, children }) => {
+  const cls = 'text-white/75 hover:text-white transition-colors';
+  return <li>{to ? <Link to={to} className={cls}>{children}</Link> : <a href={href} className={`${cls} break-all`}>{children}</a>}</li>;
+};
 
 const Footer = () => {
   return (
-    <footer className="bg-[#002044] text-white pt-12 pb-8 font-['Poppins']">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-4 mb-10">
-          <div>
-            <h2 className="text-2xl font-bold mb-3">Bloom Swift POS</h2>
-            <p className="text-sm text-gray-300 leading-relaxed">
+    <footer className="bg-navy-dark text-white pt-16 pb-8">
+      <div className="w-full px-4 sm:px-8 lg:px-12">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-12 pb-12 border-b border-white/10">
+          <div className="lg:col-span-4">
+            <Link to="/" className="inline-block"><Logo dark /></Link>
+            <p className="mt-6 text-white/60 leading-relaxed max-w-sm">
               All-in-one POS solution for modern retail and hospitality businesses. Sell faster,
               stay in control and give your customers a better experience.
             </p>
+            <span className="mt-6 block w-12 h-1 bg-brand-orange" aria-hidden="true" />
           </div>
 
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-300 mb-4">
-              Solutions by industry
-            </h3>
-            <ul className="space-y-2 text-sm">
-              <li><Link to="/retail-pos" className="text-gray-200 hover:text-white hover:underline">Retail</Link></li>
-              <li><Link to="/grocery-store" className="text-gray-200 hover:text-white hover:underline">Grocery store</Link></li>
-              <li><Link to="/bakery" className="text-gray-200 hover:text-white hover:underline">Bakery</Link></li>
-              <li><Link to="/cafe" className="text-gray-200 hover:text-white hover:underline">Cafe</Link></li>
-              <li><Link to="/pizza-shop" className="text-gray-200 hover:text-white hover:underline">Pizza shop</Link></li>
-              <li><Link to="/restaurant" className="text-gray-200 hover:text-white hover:underline">Restaurant</Link></li>
-              <li><Link to="/hotel" className="text-gray-200 hover:text-white hover:underline">Hotel</Link></li>
-              <li><Link to="/bar" className="text-gray-200 hover:text-white hover:underline">Pub and bar</Link></li>
-              <li><Link to="/clothing-store" className="text-gray-200 hover:text-white hover:underline">Clothing store</Link></li>
-              <li><Link to="/salon" className="text-gray-200 hover:text-white hover:underline">Salon Store</Link></li>
-              <li><Link to="/car-wash" className="text-gray-200 hover:text-white hover:underline">Car wash</Link></li>
-              <li><Link to="/garage-shops" className="text-gray-200 hover:text-white hover:underline">Garage shops</Link></li>
+          <div className="lg:col-span-4">
+            <FooterTitle>Solutions by industry</FooterTitle>
+            <ul className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
+              <FooterLink to="/retail-pos">Retail</FooterLink>
+              <FooterLink to="/grocery-store">Grocery store</FooterLink>
+              <FooterLink to="/bakery">Bakery</FooterLink>
+              <FooterLink to="/cafe">Cafe</FooterLink>
+              <FooterLink to="/pizza-shop">Pizza shop</FooterLink>
+              <FooterLink to="/restaurant">Restaurant</FooterLink>
+              <FooterLink to="/hotel">Hotel</FooterLink>
+              <FooterLink to="/bar">Pub and bar</FooterLink>
+              <FooterLink to="/clothing-store">Clothing store</FooterLink>
+              <FooterLink to="/salon">Salon Store</FooterLink>
+              <FooterLink to="/car-wash">Car wash</FooterLink>
+              <FooterLink to="/garage-shops">Garage shops</FooterLink>
             </ul>
           </div>
 
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-300 mb-4">
-              Integrations
-            </h3>
-            <ul className="space-y-2 text-sm">
-              <li><Link to="/integrations/loyalty" className="text-gray-200 hover:text-white hover:underline">Loyalty</Link></li>
-              <li><Link to="/integrations/mailchimp" className="text-gray-200 hover:text-white hover:underline">Mailchimp</Link></li>
-              <li><Link to="/integrations/whatsapp" className="text-gray-200 hover:text-white hover:underline">WhatsApp</Link></li>
+          <div className="lg:col-span-2">
+            <FooterTitle>Integrations</FooterTitle>
+            <ul className="space-y-3 text-sm">
+              <FooterLink to="/integrations/loyalty">Loyalty</FooterLink>
+              <FooterLink to="/integrations/mailchimp">Mailchimp</FooterLink>
+              <FooterLink to="/integrations/whatsapp">WhatsApp</FooterLink>
             </ul>
           </div>
 
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-gray-300 mb-4">
-              Help and support
-            </h3>
-            <ul className="space-y-2 text-sm">
-              <li><Link to="/support-centre" className="text-gray-200 hover:text-white hover:underline">Support centre</Link></li>
-              <li><Link to="/request-pos" className="text-gray-200 hover:text-white hover:underline">Request POS</Link></li>
-              <li><a href="mailto:info@bloomswiftpos.com" className="text-gray-200 hover:text-white hover:underline">info@bloomswiftpos.com</a></li>
+          <div className="lg:col-span-2">
+            <FooterTitle>Help and support</FooterTitle>
+            <ul className="space-y-3 text-sm">
+              <FooterLink to="/support-centre">Support centre</FooterLink>
+              <FooterLink to="/request-pos">Request POS</FooterLink>
+              <FooterLink to="/pricing">Pricing</FooterLink>
+              <FooterLink href="mailto:info@bloomswiftpos.com">info@bloomswiftpos.com</FooterLink>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-gray-400">
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-white/45">
             © {new Date().getFullYear()} Bloom Swift POS. All rights reserved. Powered by BloomTech
           </p>
         </div>

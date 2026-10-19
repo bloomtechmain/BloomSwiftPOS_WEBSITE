@@ -1,17 +1,53 @@
 @import "tailwindcss";
 
-/* Removed corrupted ITC Avant Garde Gothic font - replace with valid font file if needed */
-/* @font-face {
-  font-family: 'ITC Avant Garde Gothic Demi Condensed';
-  src: url('../../../Assets/ITC Avant Garde Gothic Demi Condensed.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-} */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --color-navy: #101D36;
+  --color-navy-dark: #0B1428;
+  --color-navy-mid: #1B2B4D;
+  --color-navy-soft: #2D4170;
+  --color-slate-brand: #3E5385;
+  --color-grey-light: #F5F6F8;
+  --color-grey-hover: #ECEFF4;
+  --color-border-grey: #E2E6ED;
+  --color-card-grey: #D5DAE3;
+  --color-brand-orange: #FF6B00;
+  --color-brand-orange-dark: #CC5500;
+}
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
+  font-family: var(--font-sans);
+  background: #ffffff;
+  color: var(--color-navy);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@keyframes flow-dash {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+
+.flow-dash {
+  animation: flow-dash 0.9s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-dash {
+    animation: none;
+  }
 }
 
 /* Shimmer animation for loading images */

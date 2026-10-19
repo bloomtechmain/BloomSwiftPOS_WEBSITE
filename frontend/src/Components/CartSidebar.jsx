@@ -40,8 +40,8 @@ const CartSidebar = () => {
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div className="flex items-center gap-2">
-            <ShoppingBag className="w-6 h-6 text-[#002044]" />
-            <h2 className="text-xl font-bold text-[#002044]">
+            <ShoppingBag className="w-6 h-6 text-navy" />
+            <h2 className="text-xl font-bold text-navy">
               Shopping Cart ({getCartCount()})
             </h2>
           </div>
@@ -71,7 +71,7 @@ const CartSidebar = () => {
                 return (
                   <div
                     key={item.id}
-                    className="flex gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200"
+                    className="flex gap-4 p-4 bg-grey-light rounded-lg border border-gray-200"
                   >
                     {/* Item Image */}
                     {itemImage && (
@@ -86,13 +86,13 @@ const CartSidebar = () => {
 
                     {/* Item Details */}
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-sm font-semibold text-[#002044] mb-1 truncate">
+                      <h3 className="text-sm font-semibold text-navy mb-1 truncate">
                         {item.hardware_name}
                       </h3>
                       {item.brand && (
                         <p className="text-xs text-gray-500 mb-2">{item.brand}</p>
                       )}
-                      <p className="text-sm font-bold text-[#002044] mb-2">
+                      <p className="text-sm font-bold text-navy mb-2">
                         {lkrFormatter.format(item.price || 0)}
                       </p>
 
@@ -131,13 +131,13 @@ const CartSidebar = () => {
         {/* Footer */}
         {cart.length > 0 && (
           <div className="border-t border-gray-200 p-6 space-y-4">
-            <div className="flex items-center justify-between text-lg font-bold text-[#002044]">
+            <div className="flex items-center justify-between text-lg font-bold text-navy">
               <span>Total:</span>
               <span>{lkrFormatter.format(getCartTotal())}</span>
             </div>
             <button
               onClick={handleCheckout}
-              className="w-full bg-[#FF7A00] hover:bg-[#E66D00] text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+              className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white font-semibold py-3 px-6 rounded-lg transition-colors"
             >
               Proceed to Checkout
             </button>

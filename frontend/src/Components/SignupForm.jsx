@@ -74,12 +74,12 @@ const SignupForm = ({ isOpen, onClose }) => {
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         className="fixed inset-0 z-[70] flex items-center justify-center p-4 pointer-events-none"
                     >
-                        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md pointer-events-auto overflow-hidden">
+                        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md pointer-events-auto overflow-y-auto max-h-[calc(100dvh-2rem)]">
                             {/* Header */}
-                            <div className="bg-[#002044] p-6 text-white flex justify-between items-center">
+                            <div className="bg-navy p-6 text-white flex justify-between items-center">
                                 <div>
-                                    <h2 className="text-2xl font-bold font-['Poppins']">Get Started</h2>
-                                    <p className="text-blue-200 text-sm mt-1">Create your BloomSwift account</p>
+                                    <h2 className="text-2xl font-bold">Get Started</h2>
+                                    <p className="text-white/60 text-sm mt-1">Create your BloomSwift account</p>
                                 </div>
                                 <button
                                     onClick={onClose}
@@ -96,7 +96,7 @@ const SignupForm = ({ isOpen, onClose }) => {
                                         <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
                                             <User size={32} />
                                         </div>
-                                        <h3 className="text-xl font-bold text-[#002044] mb-2">Welcome Aboard!</h3>
+                                        <h3 className="text-xl font-bold text-navy mb-2">Welcome Aboard!</h3>
                                         <p className="text-gray-600">{message}</p>
                                     </div>
                                 ) : (
@@ -112,7 +112,7 @@ const SignupForm = ({ isOpen, onClose }) => {
                                                         required
                                                         value={formData.fullName}
                                                         onChange={handleChange}
-                                                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF7A00] focus:border-transparent outline-none transition-all"
+                                                        className="w-full pl-10 pr-4 py-2 border border-transparent bg-grey-light rounded-xl focus:bg-white focus:ring-2 focus:ring-navy outline-none transition-all"
                                                         placeholder="John Doe"
                                                     />
                                                 </div>
@@ -128,7 +128,7 @@ const SignupForm = ({ isOpen, onClose }) => {
                                                         required
                                                         value={formData.username}
                                                         onChange={handleChange}
-                                                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF7A00] focus:border-transparent outline-none transition-all"
+                                                        className="w-full pl-10 pr-4 py-2 border border-transparent bg-grey-light rounded-xl focus:bg-white focus:ring-2 focus:ring-navy outline-none transition-all"
                                                         placeholder="johndoe123"
                                                     />
                                                 </div>
@@ -144,7 +144,7 @@ const SignupForm = ({ isOpen, onClose }) => {
                                                         required
                                                         value={formData.email}
                                                         onChange={handleChange}
-                                                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF7A00] focus:border-transparent outline-none transition-all"
+                                                        className="w-full pl-10 pr-4 py-2 border border-transparent bg-grey-light rounded-xl focus:bg-white focus:ring-2 focus:ring-navy outline-none transition-all"
                                                         placeholder="john@example.com"
                                                     />
                                                 </div>
@@ -160,7 +160,7 @@ const SignupForm = ({ isOpen, onClose }) => {
                                                         required
                                                         value={formData.password}
                                                         onChange={handleChange}
-                                                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF7A00] focus:border-transparent outline-none transition-all"
+                                                        className="w-full pl-10 pr-4 py-2 border border-transparent bg-grey-light rounded-xl focus:bg-white focus:ring-2 focus:ring-navy outline-none transition-all"
                                                         placeholder="••••••••"
                                                     />
                                                 </div>
@@ -170,7 +170,7 @@ const SignupForm = ({ isOpen, onClose }) => {
                                         <button
                                             type="submit"
                                             disabled={status === 'loading'}
-                                            className="w-full bg-[#FF7A00] text-white font-bold py-3 rounded-lg hover:bg-[#E66E00] transition-colors mt-6 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center"
+                                            className="w-full bg-brand-orange text-white font-bold py-3 rounded-lg hover:bg-brand-orange-dark transition-colors mt-6 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center"
                                         >
                                             {status === 'loading' ? (
                                                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -181,7 +181,7 @@ const SignupForm = ({ isOpen, onClose }) => {
 
                                         <p className="text-center text-sm text-gray-600 mt-4">
                                             Already have an account?{' '}
-                                            <a href="#" className="text-[#0055D4] font-semibold hover:underline">Log in</a>
+                                            <a href="#" className="text-navy font-semibold hover:underline">Log in</a>
                                         </p>
                                     </form>
                                 )}

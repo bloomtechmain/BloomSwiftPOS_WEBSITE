@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, ChevronLeft, ChevronRight } from 'lucide-react';
+import { PageHero, Section, Reveal, Eyebrow } from '../Components/kit';
 import API_URL from '../config/api';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../context/ToastContext';
@@ -25,7 +26,7 @@ const ImageCarousel = ({ images, altText }) => {
   };
 
   return (
-    <div className="relative w-full h-40 rounded-lg overflow-hidden bg-gray-50 border border-gray-100">
+    <div className="relative w-full h-48 rounded-lg overflow-hidden bg-white">
       <img
         src={images[currentIndex]}
         alt={`${altText} - Image ${currentIndex + 1}`}
@@ -36,16 +37,20 @@ const ImageCarousel = ({ images, altText }) => {
         <>
           {/* Navigation Buttons */}
           <button
+            type="button"
             onClick={goToPrevious}
-            className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full w-8 h-8 flex items-center justify-center transition-colors"
+            aria-label="Previous image"
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-navy/70 hover:bg-navy text-white rounded-full w-8 h-8 flex items-center justify-center transition-colors"
           >
-            ‹
+            <ChevronLeft size={18} aria-hidden="true" />
           </button>
           <button
+            type="button"
             onClick={goToNext}
-            className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full w-8 h-8 flex items-center justify-center transition-colors"
+            aria-label="Next image"
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-navy/70 hover:bg-navy text-white rounded-full w-8 h-8 flex items-center justify-center transition-colors"
           >
-            ›
+            <ChevronRight size={18} aria-hidden="true" />
           </button>
           
           {/* Dots Indicator */}
@@ -53,9 +58,11 @@ const ImageCarousel = ({ images, altText }) => {
             {images.map((_, index) => (
               <button
                 key={index}
+                type="button"
                 onClick={() => setCurrentIndex(index)}
+                aria-label={`Show image ${index + 1}`}
                 className={`w-2 h-2 rounded-full transition-colors ${
-                  index === currentIndex ? 'bg-white' : 'bg-white/50'
+                  index === currentIndex ? 'bg-navy' : 'bg-navy/25'
                 }`}
               />
             ))}
@@ -126,41 +133,42 @@ const Hardware = () => {
   });
 
   return (
-    <div className="min-h-screen bg-white font-['Poppins']">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-24 lg:pt-24">
-        <div className="mb-10 text-center">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#002044] mb-4">
-            Bloom Swift POS hardware
-          </h1>
-          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
-            Explore POS terminals, printers and accessories that work perfectly with Bloom Swift POS.
-          </p>
-        </div>
+    <div className="bg-white">
+      <PageHero
+        breadcrumb={[{ label: 'Home', to: '/' }, { label: 'Shop Hardware' }]}
+        title="Bloom Swift POS hardware"
+        text={<p>Explore POS terminals, printers and accessories that work perfectly with Bloom Swift POS.</p>}
+        image={{ src: '/images/general/pos-counter.webp', alt: 'POS terminal and receipt printer on a shop counter' }}
+      />
+      <Section bg="white">
 
         {loading && (
-          <p className="text-gray-500 mb-6 text-center text-sm">
+          <p className="text-gray-500 mb-6 text-sm">
             Loading hardware from database...
           </p>
         )}
 
         {error && !loading && (
-          <p className="text-red-500 mb-6 text-center text-sm">
+          <p className="text-red-600 mb-6 text-sm">
             Failed to load hardware: {error}
           </p>
         )}
 
         {hardware.length === 0 && !loading && !error && (
-          <p className="text-gray-500 mb-6 text-center text-sm">
+          <p className="text-gray-500 mb-6 text-sm">
             No hardware has been added yet. Please check back later.
           </p>
         )}
 
         {categories.map((category) => (
-          <div key={category} className="mb-12">
-            <h2 className="text-2xl font-bold text-[#002044] mb-6 border-b border-gray-200 pb-2">
-              {category}
-            </h2>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div key={category} className="mb-16 last:mb-0">
+            <Reveal className="mb-8 pb-4 border-b border-gray-200">
+              <Eyebrow className="!mb-2">Hardware</Eyebrow>
+              <h2 className="text-2xl lg:text-3xl font-extrabold text-navy">
+                {category}
+              </h2>
+            </Reveal>
+            <div className="grid gap-6 lg:gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {groupedHardware[category].map((item) => {
                 const specsPreview =
                   item.specs && item.specs.length > 120
@@ -182,7 +190,7 @@ const Hardware = () => {
                 return (
                   <div
                     key={item.id}
-                    className="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 flex flex-col hover:shadow-md transition-shadow"
+                    className="group rounded-xl bg-grey-light p-6 flex flex-col shadow-[5px_5px_0_0_#D5DAE3] hover:bg-white hover:shadow-[8px_8px_0_0_#101D36] hover:-translate-x-1 hover:-translate-y-1 transition-all duration-200"
                   >
                     {displayImages.length > 0 && (
                       <div className="mb-4">
@@ -191,9 +199,9 @@ const Hardware = () => {
                     )}
 
                     <div className="mb-4">
-                      <h2 className="text-lg font-semibold text-[#002044]">
+                      <h3 className="text-lg font-extrabold text-navy">
                         {item.hardware_name}
-                      </h2>
+                      </h3>
                       {item.brand && (
                         <p className="text-sm text-gray-500 mt-1">
                           {item.brand}
@@ -214,7 +222,7 @@ const Hardware = () => {
 
                     <div className="mt-4 space-y-3">
                       <div className="flex items-center justify-between">
-                        <div className="text-sm font-semibold text-[#002044]">
+                        <div className="text-lg font-extrabold text-navy">
                           {item.price != null ? lkrFormatter.format(Number(item.price)) : 'Contact us for pricing'}
                         </div>
                       </div>
@@ -225,7 +233,7 @@ const Hardware = () => {
                             addToCart(item, 1);
                             toast.success(`${item.hardware_name} added to cart!`);
                           }}
-                          className="w-full bg-[#FF7A00] hover:bg-[#E66D00] text-white font-semibold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+                          className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2"
                         >
                           <ShoppingCart size={18} />
                           Add to Cart
@@ -238,7 +246,7 @@ const Hardware = () => {
             </div>
           </div>
         ))}
-      </div>
+      </Section>
     </div>
   );
 };

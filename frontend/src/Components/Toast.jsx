@@ -23,15 +23,15 @@ const Toast = ({ toast, onDismiss }) => {
   const icons = {
     success: <CheckCircle className="w-6 h-6 text-green-500" />,
     error: <XCircle className="w-6 h-6 text-red-500" />,
-    warning: <AlertCircle className="w-6 h-6 text-orange-500" />,
-    info: <Info className="w-6 h-6 text-blue-500" />
+    warning: <AlertCircle className="w-6 h-6 text-brand-orange-dark" />,
+    info: <Info className="w-6 h-6 text-navy" />
   };
 
   const bgColors = {
     success: 'bg-green-50 border-green-100',
     error: 'bg-red-50 border-red-100',
-    warning: 'bg-orange-50 border-orange-100',
-    info: 'bg-blue-50 border-blue-100'
+    warning: 'bg-grey-light border-gray-200',
+    info: 'bg-grey-light border-gray-200'
   };
 
   return (
@@ -53,7 +53,7 @@ const Toast = ({ toast, onDismiss }) => {
       </div>
       <div className="flex-shrink-0 ml-4 flex">
         <button
-          className="bg-transparent rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="bg-transparent rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-navy"
           onClick={() => onDismiss(id)}
         >
           <span className="sr-only">Close</span>

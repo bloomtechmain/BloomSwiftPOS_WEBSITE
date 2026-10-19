@@ -256,33 +256,33 @@ const Checkout = () => {
   const grandTotal = cartTotal + shippingFee;
 
   return (
-    <div className="min-h-screen bg-gray-50 font-['Poppins'] py-12">
+    <div className="min-h-screen bg-grey-light py-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <button
             onClick={() => navigate('/hardware')}
-            className="flex items-center gap-2 text-[#002044] hover:text-[#FF7A00] transition-colors mb-4"
+            className="flex items-center gap-2 text-navy hover:text-brand-orange transition-colors mb-4"
           >
             <ArrowLeft size={20} />
             <span>Back to Shop</span>
           </button>
-          <h1 className="text-3xl sm:text-4xl font-bold text-[#002044]">Checkout</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold text-navy">Checkout</h1>
         </div>
 
         {/* Progress Steps */}
         <div className="mb-8">
           <div className="flex items-center justify-center">
             <div className="flex items-center gap-4">
-              <div className={`flex items-center gap-2 ${step >= 1 ? 'text-[#FF7A00]' : 'text-gray-400'}`}>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 1 ? 'bg-[#FF7A00] text-white' : 'bg-gray-300 text-white'}`}>
+              <div className={`flex items-center gap-2 ${step >= 1 ? 'text-brand-orange' : 'text-gray-400'}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 1 ? 'bg-brand-orange text-white' : 'bg-gray-300 text-white'}`}>
                   {step > 1 ? <Check size={18} /> : '1'}
                 </div>
                 <span className="font-semibold hidden sm:inline">Shipping</span>
               </div>
-              <div className={`w-16 h-1 ${step >= 2 ? 'bg-[#FF7A00]' : 'bg-gray-300'}`} />
-              <div className={`flex items-center gap-2 ${step >= 2 ? 'text-[#FF7A00]' : 'text-gray-400'}`}>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 2 ? 'bg-[#FF7A00] text-white' : 'bg-gray-300 text-white'}`}>
+              <div className={`w-16 h-1 ${step >= 2 ? 'bg-brand-orange' : 'bg-gray-300'}`} />
+              <div className={`flex items-center gap-2 ${step >= 2 ? 'text-brand-orange' : 'text-gray-400'}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${step >= 2 ? 'bg-brand-orange text-white' : 'bg-gray-300 text-white'}`}>
                   2
                 </div>
                 <span className="font-semibold hidden sm:inline">Payment</span>
@@ -296,7 +296,7 @@ const Checkout = () => {
           <div className="lg:col-span-2">
             {step === 1 && (
               <div className="bg-white rounded-xl shadow-sm p-6 sm:p-8">
-                <h2 className="text-2xl font-bold text-[#002044] mb-6">Shipping Information</h2>
+                <h2 className="text-2xl font-bold text-navy mb-6">Shipping Information</h2>
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -307,7 +307,7 @@ const Checkout = () => {
                       name="fullName"
                       value={formData.fullName}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF7A00] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-transparent bg-grey-light rounded-xl focus:bg-white focus:ring-2 focus:ring-navy"
                       placeholder="John Doe"
                     />
                   </div>
@@ -322,7 +322,7 @@ const Checkout = () => {
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF7A00] focus:border-transparent"
+                        className="w-full px-4 py-3 border border-transparent bg-grey-light rounded-xl focus:bg-white focus:ring-2 focus:ring-navy"
                         placeholder="john@example.com"
                       />
                     </div>
@@ -335,7 +335,7 @@ const Checkout = () => {
                         name="phone"
                         value={formData.phone}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF7A00] focus:border-transparent"
+                        className="w-full px-4 py-3 border border-transparent bg-grey-light rounded-xl focus:bg-white focus:ring-2 focus:ring-navy"
                         placeholder="+94 77 123 4567"
                       />
                     </div>
@@ -350,7 +350,7 @@ const Checkout = () => {
                       value={formData.address}
                       onChange={handleInputChange}
                       rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF7A00] focus:border-transparent"
+                      className="w-full px-4 py-3 border border-transparent bg-grey-light rounded-xl focus:bg-white focus:ring-2 focus:ring-navy"
                       placeholder="123 Main Street, Apartment 4B"
                     />
                   </div>
@@ -365,7 +365,7 @@ const Checkout = () => {
                         name="city"
                         value={formData.city}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF7A00] focus:border-transparent"
+                        className="w-full px-4 py-3 border border-transparent bg-grey-light rounded-xl focus:bg-white focus:ring-2 focus:ring-navy"
                         placeholder="Colombo"
                       />
                     </div>
@@ -378,7 +378,7 @@ const Checkout = () => {
                         name="postalCode"
                         value={formData.postalCode}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF7A00] focus:border-transparent"
+                        className="w-full px-4 py-3 border border-transparent bg-grey-light rounded-xl focus:bg-white focus:ring-2 focus:ring-navy"
                         placeholder="00100"
                       />
                     </div>
@@ -388,7 +388,7 @@ const Checkout = () => {
                 <div className="mt-8">
                   <button
                     onClick={handleNextStep}
-                    className="w-full bg-[#FF7A00] hover:bg-[#E66D00] text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                    className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white font-semibold py-3 px-6 rounded-lg transition-colors"
                   >
                     Continue to Payment
                   </button>
@@ -398,7 +398,7 @@ const Checkout = () => {
 
             {step === 2 && (
               <div className="bg-white rounded-xl shadow-sm p-6 sm:p-8">
-                <h2 className="text-2xl font-bold text-[#002044] mb-6">Payment Method</h2>
+                <h2 className="text-2xl font-bold text-navy mb-6">Payment Method</h2>
                 
                 <div className="space-y-4 mb-8">
                   {/* Stripe */}
@@ -406,20 +406,20 @@ const Checkout = () => {
                     onClick={() => handlePaymentMethodSelect('stripe')}
                     className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
                       formData.paymentMethod === 'stripe'
-                        ? 'border-[#FF7A00] bg-orange-50'
+                        ? 'border-brand-orange bg-grey-light'
                         : 'border-gray-300 hover:border-gray-400'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                        formData.paymentMethod === 'stripe' ? 'border-[#FF7A00]' : 'border-gray-300'
+                        formData.paymentMethod === 'stripe' ? 'border-brand-orange' : 'border-gray-300'
                       }`}>
                         {formData.paymentMethod === 'stripe' && (
-                          <div className="w-3 h-3 rounded-full bg-[#FF7A00]" />
+                          <div className="w-3 h-3 rounded-full bg-brand-orange" />
                         )}
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-semibold text-[#002044]">Credit/Debit Card (Stripe)</h3>
+                        <h3 className="font-semibold text-navy">Credit/Debit Card (Stripe)</h3>
                         <p className="text-sm text-gray-600">Pay securely with Stripe</p>
                       </div>
                       <CreditCard className="text-gray-400" size={24} />
@@ -431,20 +431,20 @@ const Checkout = () => {
                     onClick={() => handlePaymentMethodSelect('paypal')}
                     className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
                       formData.paymentMethod === 'paypal'
-                        ? 'border-[#FF7A00] bg-orange-50'
+                        ? 'border-brand-orange bg-grey-light'
                         : 'border-gray-300 hover:border-gray-400'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                        formData.paymentMethod === 'paypal' ? 'border-[#FF7A00]' : 'border-gray-300'
+                        formData.paymentMethod === 'paypal' ? 'border-brand-orange' : 'border-gray-300'
                       }`}>
                         {formData.paymentMethod === 'paypal' && (
-                          <div className="w-3 h-3 rounded-full bg-[#FF7A00]" />
+                          <div className="w-3 h-3 rounded-full bg-brand-orange" />
                         )}
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-semibold text-[#002044]">PayPal</h3>
+                        <h3 className="font-semibold text-navy">PayPal</h3>
                         <p className="text-sm text-gray-600">Pay with your PayPal account</p>
                       </div>
                       <div className="text-2xl font-bold text-[#0070BA]">PayPal</div>
@@ -456,20 +456,20 @@ const Checkout = () => {
                     onClick={() => handlePaymentMethodSelect('payhere')}
                     className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
                       formData.paymentMethod === 'payhere'
-                        ? 'border-[#FF7A00] bg-orange-50'
+                        ? 'border-brand-orange bg-grey-light'
                         : 'border-gray-300 hover:border-gray-400'
                     }`}
                   >
                     <div className="flex items-center gap-3">
                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                        formData.paymentMethod === 'payhere' ? 'border-[#FF7A00]' : 'border-gray-300'
+                        formData.paymentMethod === 'payhere' ? 'border-brand-orange' : 'border-gray-300'
                       }`}>
                         {formData.paymentMethod === 'payhere' && (
-                          <div className="w-3 h-3 rounded-full bg-[#FF7A00]" />
+                          <div className="w-3 h-3 rounded-full bg-brand-orange" />
                         )}
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-semibold text-[#002044]">PayHere (Sri Lanka)</h3>
+                        <h3 className="font-semibold text-navy">PayHere (Sri Lanka)</h3>
                         <p className="text-sm text-gray-600">Local payment gateway for LKR</p>
                       </div>
                       <div className="text-xl font-bold text-[#F15A29]">PayHere</div>
@@ -487,7 +487,7 @@ const Checkout = () => {
                   <button
                     onClick={handlePlaceOrder}
                     disabled={loading}
-                    className="flex-1 bg-[#FF7A00] hover:bg-[#E66D00] text-white font-semibold py-3 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="flex-1 bg-brand-orange hover:bg-brand-orange-dark text-white font-semibold py-3 px-6 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {loading ? (
                       <>
@@ -506,7 +506,7 @@ const Checkout = () => {
           {/* Order Summary Sidebar */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-sm p-6 sticky top-24">
-              <h2 className="text-xl font-bold text-[#002044] mb-4 flex items-center gap-2">
+              <h2 className="text-xl font-bold text-navy mb-4 flex items-center gap-2">
                 <ShoppingBag size={24} />
                 Order Summary
               </h2>
@@ -524,11 +524,11 @@ const Checkout = () => {
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-sm font-semibold text-[#002044] truncate">
+                      <h3 className="text-sm font-semibold text-navy truncate">
                         {item.hardware_name}
                       </h3>
                       <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
-                      <p className="text-sm font-bold text-[#002044]">
+                      <p className="text-sm font-bold text-navy">
                         {lkrFormatter.format(item.price * item.quantity)}
                       </p>
                     </div>
@@ -545,7 +545,7 @@ const Checkout = () => {
                   <span className="text-gray-600">Shipping</span>
                   <span className="font-semibold">{lkrFormatter.format(shippingFee)}</span>
                 </div>
-                <div className="flex justify-between text-lg font-bold text-[#002044] pt-2 border-t">
+                <div className="flex justify-between text-lg font-bold text-navy pt-2 border-t">
                   <span>Total</span>
                   <span>{lkrFormatter.format(grandTotal)}</span>
                 </div>

@@ -1,482 +1,147 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { CheckCircle, Mail, Users, BarChart3, RefreshCw, Zap, Search, Share2, Layers, MousePointerClick, Heart } from 'lucide-react';
+import { Users, BarChart3, RefreshCw, Zap, Search, Share2, Layers, MousePointerClick, Heart } from 'lucide-react';
 import { useUI } from '../context/UIContext';
+import { PageHero, Section, Heading, BlockGrid, PhotoBand, CtaBand, Reveal } from '../Components/kit';
+import { FeatureSection, HeroStat } from '../Components/IndustryPage';
+
+const quick = [
+  { icon: RefreshCw, title: 'Synchronized Customer Insights', desc: 'Eliminate manual data entry by automatically syncing purchase history and customer profiles directly from your POS to your favorite email platform. Whether you use MailChimp, Zoho, or manual exports, your marketing lists stay fresh and accurate without the extra workload.' },
+  { icon: Users, title: 'Precision-Targeted Campaigns', desc: 'Stop sending generic blasts and start sending what your customers actually want. Use real-time data to segment your audience based on what they buy, how much they spend, or how long it’s been since their last visit, ensuring every email feels personal and relevant.' },
+  { icon: BarChart3, title: 'Boosted Retention and ROI', desc: 'Drive repeat business by automating the "heavy lifting." Set up automated "Thank You" notes, birthday rewards, or win-back campaigns that trigger based on POS activity, turning one-time shoppers into loyal brand advocates with minimal effort.' },
+];
+
+const logos = [
+  { src: '/Assets/email/mailchimp_icon_146054.png', alt: 'MailChimp' },
+  { src: '/Assets/email/zoho_logo_icon_169675.png', alt: 'Zoho Campaigns' },
+  { src: '/Assets/email/images.png', alt: 'MailerLite' },
+  { src: '/Assets/email/moosend-logo-icon.avif', alt: 'Moosend' },
+];
+
+const sections = [
+  {
+    title: 'Precision-Targeted Campaigns',
+    text: ['Generic marketing often goes ignored, but data-driven outreach captures attention by meeting customers exactly where they are in their journey. By leveraging the specific purchase behaviors captured at your POS, you can move beyond broad messaging and deliver content that truly resonates.'],
+    points: [
+      { title: 'Behavior-Based Segmentation', desc: 'Group customers automatically based on their actual spending habits, such as "high-spenders," "frequent coffee buyers," or "seasonal shoppers," for laser-focused messaging.' },
+      { title: 'Reduced Marketing Waste', desc: 'Save time and resources by only sending offers to the people most likely to redeem them, increasing your conversion rates while keeping your brand out of the spam folder.' },
+      { title: 'Dynamic Personalization', desc: 'Use specific POS data points—like the date of a last visit or a favorite product category—to trigger timely, relevant emails that make customers feel seen and valued.' },
+    ],
+    image: { src: '/images/general/phone-laptop-2.webp', alt: 'Precision Targeted Campaigns' },
+  },
+  {
+    title: 'Reach your customers exactly where they engage most',
+    text: ['By bridging the gap between your POS and their inbox, you replace fleeting transactions with a high-impact digital experience. Our platform automatically synchronizes checkout data to deliver professional, searchable invoices and personalized rewards directly to your customers’ primary email accounts.'],
+    points: [
+      { title: 'Reliable Digital Records', desc: 'Eliminate the frustration of lost paper receipts by providing customers with a permanent, searchable archive of their purchases, accessible from any device at any time.' },
+      { title: 'Seamless Information Access', desc: 'Empower your customers with the convenience of a dedicated digital history, allowing them to track orders and verify transactions without the clutter of physical paperwork.' },
+      { title: 'Automated Loyalty Growth', desc: 'Convert every sale into a lasting relationship by triggering tailored rewards and exclusive updates based on shopping habits, making their next visit the obvious choice.' },
+    ],
+    image: { src: '/images/general/pointing-laptop.webp', alt: 'Digital Engagement' },
+  },
+];
+
+const integrations = [
+  { icon: Zap, title: 'Build Lasting Brand Recall', desc: 'Move beyond discarded paper receipts by establishing a permanent, branded presence in your customer’s inbox with beautiful, automated follow-ups.' },
+  { icon: MousePointerClick, title: 'Drive Frictionless Reorders', desc: 'Insert direct "Buy Again" links and personalized product recommendations into your emails based on past POS history, making the next purchase just one click away.' },
+  { icon: Share2, title: 'Simplify Word-of-Mouth', desc: 'Increase your reach by including easy "Forward to a Friend" rewards and social sharing buttons in every digital touchpoint, turning your loyal customers into active advocates.' },
+];
+
+const platforms = [
+  {
+    logo: { src: '/Assets/email/mailchimp_icon_146054.png', alt: 'Mailchimp Logo' },
+    eyebrow: 'Platform',
+    title: 'Mailchimp',
+    text: ['The all-in-one marketing platform that helps you grow your business. With our integration, sync your POS contacts to Mailchimp instantly, segment them based on purchase history, and send personalized campaigns that drive revenue.'],
+    points: [{ title: 'Advanced behavioral targeting' }, { title: 'Automated customer journeys' }, { title: 'Detailed revenue reporting' }],
+    image: { src: '/images/general/phone-laptop.webp', alt: 'Mailchimp Integration' },
+  },
+  {
+    logo: { src: '/Assets/email/zoho_logo_icon_169675.png', alt: 'Zoho Campaigns Logo' },
+    eyebrow: 'Platform',
+    title: 'Zoho Campaigns',
+    text: ['Part of the Zoho ecosystem, this platform is perfect for businesses needing deep CRM integration. Create responsive emails and automate workflows to engage your audience at the right time.'],
+    points: [{ title: 'Seamless CRM synchronization' }, { title: 'A/B testing capabilities' }, { title: 'Dynamic content personalization' }],
+    image: { src: '/images/general/coworking-desk.webp', alt: 'Zoho Campaigns Integration' },
+  },
+  {
+    logo: { src: '/Assets/email/images.png', alt: 'MailerLite Logo' },
+    eyebrow: 'Platform',
+    title: 'MailerLite',
+    text: ['Advanced email marketing made simple. Connect your POS to MailerLite to automate your welcome emails, reward loyal customers, and design beautiful newsletters with an intuitive drag-and-drop editor.'],
+    points: [{ title: 'Intuitive drag-and-drop builder' }, { title: 'Landing page integration' }, { title: 'Subscriber management' }],
+    image: { src: '/images/general/team-whiteboard.webp', alt: 'MailerLite Integration' },
+  },
+];
 
 const EmailCampaign = () => {
-    const { setIsContactSalesOpen } = useUI();
-    const fadeIn = {
-        hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0 }
-    };
+  const { setIsContactSalesOpen } = useUI();
+  return (
+    <div className="bg-white">
+      <PageHero
+        breadcrumb={[{ label: 'Home', to: '/' }, { label: 'Integrations' }, { label: 'Email Campaign' }]}
+        eyebrow="Email Marketing Integration"
+        title="Custom Email Campaign"
+        text={<p>Our platform bridges the gap between your sales counter and your customer's inbox by automatically transforming daily transaction data into actionable marketing insights.</p>}
+        actions={[{ label: 'Get Started', onClick: () => setIsContactSalesOpen(true) }]}
+        image={{ src: '/images/email/workspace.webp', alt: 'Email Campaign Background' }}
+      >
+        <HeroStat label="Engagement Rate" value="+60% Increase" />
+      </PageHero>
 
-    return (
-        <div className="font-['Poppins']">
-            {/* Hero Section */}
-            <div className="relative text-white overflow-hidden">
-                {/* Background Image - Faded */}
-                <div className="absolute inset-0">
-                    <img 
-                        src="/Assets/email/le-vu-vSlCNmZdjHQ-unsplash.jpg" 
-                        alt="Email Campaign Background" 
-                        className="w-full h-full object-cover opacity-40"
-                    />
-                </div>
-                {/* Dark Overlay for Text Readability */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#002044]/80 via-[#003366]/70 to-[#004080]/80"></div>
+      <Section bg="white">
+        <BlockGrid items={quick} cols={3} />
+      </Section>
 
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16 lg:pt-16 lg:pb-20">
-                    <div className="grid lg:grid-cols-2 gap-12 items-center">
-                        <motion.div
-                            initial="hidden"
-                            animate="visible"
-                            variants={fadeIn}
-                            className="text-left"
-                        >
-                            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6 border border-white/20">
-                                <Mail size={16} className="text-[#FF7A00]" />
-                                <span className="text-[#FF7A00] font-semibold tracking-wide text-sm uppercase">Email Marketing Integration</span>
-                            </div>
-                            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-                                Custom Email Campaign
-                            </h1>
-                            <p className="text-lg sm:text-xl text-gray-300 mb-8 leading-relaxed max-w-2xl">
-                                Our platform bridges the gap between your sales counter and your customer's inbox by automatically transforming daily transaction data into actionable marketing insights.
-                            </p>
-                            <div className="flex flex-wrap gap-4">
-                                <button 
-                                    onClick={() => setIsContactSalesOpen(true)}
-                                    className="px-8 py-4 bg-[#FF7A00] hover:bg-[#E66E00] text-white font-bold rounded-lg transition-all transform hover:scale-105 shadow-lg shadow-orange-500/20"
-                                >
-                                    Get Started
-                                </button>
-                            </div>
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, x: 50 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8, delay: 0.2 }}
-                            className="relative hidden lg:block"
-                        >
-                            {/* Abstract decorative elements */}
-                            <div className="absolute -top-12 -right-12 w-64 h-64 bg-[#FF7A00] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-                            <div className="absolute -bottom-12 -left-12 w-64 h-64 bg-[#0055D4] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-
-                            <img
-                                src="/Assets/email/brian-j-tromp-X8ejw0g0C_g-unsplash.jpg"
-                                alt="Email Campaign Dashboard"
-                                className="relative rounded-2xl shadow-2xl border border-white/10 z-10 w-full max-h-80 object-cover"
-                            />
-
-                            {/* Floating Cards */}
-                            <motion.div
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.6 }}
-                                className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-xl z-20 flex items-center gap-4 max-w-xs"
-                            >
-                                <div className="bg-green-100 p-3 rounded-full">
-                                    <CheckCircle className="text-green-600" size={24} />
-                                </div>
-                                <div>
-                                    <p className="text-[#002044] font-bold">Engagement Rate</p>
-                                    <p className="text-green-600 font-bold">+60% Increase</p>
-                                </div>
-                            </motion.div>
-                        </motion.div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Quick View Section */}
-            <div className="py-20 bg-gray-50">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid md:grid-cols-3 gap-8">
-                        {[
-                            {
-                                icon: RefreshCw,
-                                title: "Synchronized Customer Insights",
-                                desc: "Eliminate manual data entry by automatically syncing purchase history and customer profiles directly from your POS to your favorite email platform. Whether you use MailChimp, Zoho, or manual exports, your marketing lists stay fresh and accurate without the extra workload."
-                            },
-                            {
-                                icon: Users,
-                                title: "Precision-Targeted Campaigns",
-                                desc: "Stop sending generic blasts and start sending what your customers actually want. Use real-time data to segment your audience based on what they buy, how much they spend, or how long it’s been since their last visit, ensuring every email feels personal and relevant."
-                            },
-                            {
-                                icon: BarChart3,
-                                title: "Boosted Retention and ROI",
-                                desc: "Drive repeat business by automating the \"heavy lifting.\" Set up automated \"Thank You\" notes, birthday rewards, or win-back campaigns that trigger based on POS activity, turning one-time shoppers into loyal brand advocates with minimal effort."
-                            }
-                        ].map((item, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.2 }}
-                                className="bg-white p-8 rounded-xl shadow-lg border-t-4 border-[#FF7A00]"
-                            >
-                                <div className="bg-orange-50 w-16 h-16 rounded-full flex items-center justify-center mb-6">
-                                    <item.icon className="text-[#FF7A00]" size={32} />
-                                </div>
-                                <h3 className="text-xl font-bold text-[#002044] mb-4">{item.title}</h3>
-                                <p className="text-gray-600 leading-relaxed">{item.desc}</p>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
-            {/* Integration Logos */}
-            <div className="py-16 bg-white border-b border-gray-100">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-8">Seamlessly Integrates With</p>
-                    <div className="grid grid-cols-2 gap-8 max-w-2xl mx-auto">
-                        <div className="flex items-center justify-center p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all duration-300">
-                            <img src="/Assets/email/mailchimp_icon_146054.png" alt="MailChimp" className="w-32 h-32 object-contain" />
-                        </div>
-                        <div className="flex items-center justify-center p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all duration-300">
-                            <img src="/Assets/email/zoho_logo_icon_169675.png" alt="Zoho Campaigns" className="w-32 h-32 object-contain" />
-                        </div>
-                        <div className="flex items-center justify-center p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all duration-300">
-                            <img src="/Assets/email/images.png" alt="MailerLite" className="w-32 h-32 object-contain" />
-                        </div>
-                        <div className="flex items-center justify-center p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-all duration-300">
-                            <img src="/Assets/email/moosend-logo-icon.avif" alt="Moosend" className="w-32 h-32 object-contain" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Section 1: Precision-Targeted Campaigns */}
-            <div className="py-20 bg-white">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-col lg:flex-row items-center gap-16">
-                        <div className="lg:w-1/2">
-                            <motion.h2
-                                initial={{ opacity: 0, x: -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                className="text-3xl font-bold text-[#002044] mb-6"
-                            >
-                                Precision-Targeted Campaigns
-                            </motion.h2>
-                            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                                Generic marketing often goes ignored, but data-driven outreach captures attention by meeting
-                                customers exactly where they are in their journey. By leveraging the specific purchase behaviors
-                                captured at your POS, you can move beyond broad messaging and deliver content that truly resonates.
-                            </p>
-                            <div className="space-y-6">
-                                {[
-                                    {
-                                        title: "Behavior-Based Segmentation",
-                                        desc: "Group customers automatically based on their actual spending habits, such as \"high-spenders,\" \"frequent coffee buyers,\" or \"seasonal shoppers,\" for laser-focused messaging."
-                                    },
-                                    {
-                                        title: "Reduced Marketing Waste",
-                                        desc: "Save time and resources by only sending offers to the people most likely to redeem them, increasing your conversion rates while keeping your brand out of the spam folder."
-                                    },
-                                    {
-                                        title: "Dynamic Personalization",
-                                        desc: "Use specific POS data points—like the date of a last visit or a favorite product category—to trigger timely, relevant emails that make customers feel seen and valued."
-                                    }
-                                ].map((item, index) => (
-                                    <div key={index} className="flex gap-4">
-                                        <div className="mt-1">
-                                            <CheckCircle className="text-[#0055D4]" size={24} />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-bold text-[#002044] text-lg">{item.title}</h4>
-                                            <p className="text-gray-600 mt-1">{item.desc}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="lg:w-1/2">
-                            <img
-                                src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1000&auto=format&fit=crop"
-                                alt="Precision Targeted Campaigns"
-                                className="rounded-2xl shadow-2xl"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Section 2: Reach your customers exactly where they engage most */}
-            <div className="py-20 bg-[#F8FAFC]">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-col lg:flex-row-reverse items-center gap-16">
-                        <div className="lg:w-1/2">
-                            <motion.h2
-                                initial={{ opacity: 0, x: 20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                className="text-3xl font-bold text-[#002044] mb-6"
-                            >
-                                Reach your customers exactly where they engage most
-                            </motion.h2>
-                            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                                By bridging the gap between your POS and their inbox, you replace fleeting transactions with a
-                                high-impact digital experience. Our platform automatically synchronizes checkout data to deliver
-                                professional, searchable invoices and personalized rewards directly to your customers’ primary
-                                email accounts.
-                            </p>
-                            <div className="space-y-6">
-                                {[
-                                    {
-                                        icon: Layers,
-                                        title: "Reliable Digital Records",
-                                        desc: "Eliminate the frustration of lost paper receipts by providing customers with a permanent, searchable archive of their purchases, accessible from any device at any time."
-                                    },
-                                    {
-                                        icon: Search,
-                                        title: "Seamless Information Access",
-                                        desc: "Empower your customers with the convenience of a dedicated digital history, allowing them to track orders and verify transactions without the clutter of physical paperwork."
-                                    },
-                                    {
-                                        icon: Heart,
-                                        title: "Automated Loyalty Growth",
-                                        desc: "Convert every sale into a lasting relationship by triggering tailored rewards and exclusive updates based on shopping habits, making their next visit the obvious choice."
-                                    }
-                                ].map((item, index) => (
-                                    <div key={index} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                                        <div className="flex items-start gap-4">
-                                            <div className="bg-blue-50 p-3 rounded-lg">
-                                                <item.icon className="text-[#0055D4]" size={24} />
-                                            </div>
-                                            <div>
-                                                <h4 className="font-bold text-[#002044] text-lg mb-2">{item.title}</h4>
-                                                <p className="text-gray-600">{item.desc}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="lg:w-1/2">
-                            <img
-                                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000&auto=format&fit=crop"
-                                alt="Digital Engagement"
-                                className="rounded-2xl shadow-2xl"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Section 3: Seamless email marketing integrations */}
-            <div className="py-20 bg-white">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center max-w-3xl mx-auto mb-16">
-                        <h2 className="text-3xl font-bold text-[#002044] mb-6">
-                            Seamless email marketing integrations (like Mailchimp, Zoho, and MailerLite) POS Integration
-                        </h2>
-                        <p className="text-lg text-gray-600">
-                            Transform your point-of-sale from a final transaction into a long-term connection by turning
-                            every receipt into a gateway for your email marketing funnel. By automatically capturing
-                            customer data at checkout, you transition from one-off sales to consistent, professional
-                            engagement that keeps your brand top-of-mind in your customer's inbox.
-                        </p>
-                    </div>
-
-                    <div className="grid md:grid-cols-3 gap-8">
-                        {[
-                            {
-                                icon: Zap,
-                                title: "Build Lasting Brand Recall",
-                                desc: "Move beyond discarded paper receipts by establishing a permanent, branded presence in your customer’s inbox with beautiful, automated follow-ups."
-                            },
-                            {
-                                icon: MousePointerClick,
-                                title: "Drive Frictionless Reorders",
-                                desc: "Insert direct \"Buy Again\" links and personalized product recommendations into your emails based on past POS history, making the next purchase just one click away."
-                            },
-                            {
-                                icon: Share2,
-                                title: "Simplify Word-of-Mouth",
-                                desc: "Increase your reach by including easy \"Forward to a Friend\" rewards and social sharing buttons in every digital touchpoint, turning your loyal customers into active advocates."
-                            }
-                        ].map((item, index) => (
-                            <motion.div
-                                key={index}
-                                whileHover={{ y: -5 }}
-                                className="bg-[#002044] text-white p-8 rounded-2xl relative overflow-hidden group"
-                            >
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 group-hover:bg-white/10 transition-colors"></div>
-                                <div className="relative z-10">
-                                    <item.icon className="text-[#FF7A00] mb-6" size={40} />
-                                    <h3 className="text-xl font-bold mb-4">{item.title}</h3>
-                                    <p className="text-gray-300 leading-relaxed">{item.desc}</p>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
-            {/* Featured Platforms Section */}
-            <div className="py-20 bg-gray-50">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center max-w-3xl mx-auto mb-16">
-                        <h2 className="text-3xl font-bold text-[#002044] mb-6">
-                            Supported Platforms
-                        </h2>
-                        <p className="text-lg text-gray-600">
-                            We integrate seamlessly with the world's leading email marketing platforms to help you stay connected with your customers.
-                        </p>
-                    </div>
-
-                    <div className="space-y-20">
-                        {/* Mailchimp */}
-                        <div className="flex flex-col lg:flex-row items-center gap-12">
-                            <div className="lg:w-1/2">
-                                <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 relative overflow-hidden group hover:shadow-xl transition-shadow duration-300">
-                                    <div className="absolute top-0 right-0 w-32 h-32 bg-[#FFE01B]/20 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-                                    <img src="/Assets/email/mailchimp_icon_146054.png" alt="Mailchimp Logo" className="h-16 mb-6 object-contain" />
-                                    <h3 className="text-2xl font-bold text-[#002044] mb-4">Mailchimp</h3>
-                                    <p className="text-gray-600 leading-relaxed mb-6">
-                                        The all-in-one marketing platform that helps you grow your business. With our integration, sync your POS contacts to Mailchimp instantly, segment them based on purchase history, and send personalized campaigns that drive revenue.
-                                    </p>
-                                    <ul className="space-y-3">
-                                        <li className="flex items-center gap-3 text-gray-700">
-                                            <div className="w-2 h-2 rounded-full bg-[#FFE01B]"></div>
-                                            Advanced behavioral targeting
-                                        </li>
-                                        <li className="flex items-center gap-3 text-gray-700">
-                                            <div className="w-2 h-2 rounded-full bg-[#FFE01B]"></div>
-                                            Automated customer journeys
-                                        </li>
-                                        <li className="flex items-center gap-3 text-gray-700">
-                                            <div className="w-2 h-2 rounded-full bg-[#FFE01B]"></div>
-                                            Detailed revenue reporting
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="lg:w-1/2">
-                                <motion.div
-                                    initial={{ opacity: 0, x: 20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    className="rounded-2xl overflow-hidden shadow-2xl"
-                                >
-                                    <img
-                                        src="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?q=80&w=1000&auto=format&fit=crop"
-                                        alt="Mailchimp Integration"
-                                        className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
-                                    />
-                                </motion.div>
-                            </div>
-                        </div>
-
-                        {/* Zoho Campaigns */}
-                        <div className="flex flex-col lg:flex-row-reverse items-center gap-12">
-                            <div className="lg:w-1/2">
-                                <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 relative overflow-hidden group hover:shadow-xl transition-shadow duration-300">
-                                    <div className="absolute top-0 left-0 w-32 h-32 bg-[#199928]/10 rounded-br-full -ml-8 -mt-8 transition-transform group-hover:scale-110"></div>
-                                    <img src="/Assets/email/zoho_logo_icon_169675.png" alt="Zoho Campaigns Logo" className="h-16 mb-6 object-contain" />
-                                    <h3 className="text-2xl font-bold text-[#002044] mb-4">Zoho Campaigns</h3>
-                                    <p className="text-gray-600 leading-relaxed mb-6">
-                                        Part of the Zoho ecosystem, this platform is perfect for businesses needing deep CRM integration. Create responsive emails and automate workflows to engage your audience at the right time.
-                                    </p>
-                                    <ul className="space-y-3">
-                                        <li className="flex items-center gap-3 text-gray-700">
-                                            <div className="w-2 h-2 rounded-full bg-[#199928]"></div>
-                                            Seamless CRM synchronization
-                                        </li>
-                                        <li className="flex items-center gap-3 text-gray-700">
-                                            <div className="w-2 h-2 rounded-full bg-[#199928]"></div>
-                                            A/B testing capabilities
-                                        </li>
-                                        <li className="flex items-center gap-3 text-gray-700">
-                                            <div className="w-2 h-2 rounded-full bg-[#199928]"></div>
-                                            Dynamic content personalization
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="lg:w-1/2">
-                                <motion.div
-                                    initial={{ opacity: 0, x: -20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    className="rounded-2xl overflow-hidden shadow-2xl"
-                                >
-                                    <img
-                                        src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop"
-                                        alt="Zoho Campaigns Integration"
-                                        className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
-                                    />
-                                </motion.div>
-                            </div>
-                        </div>
-
-                        {/* MailerLite */}
-                        <div className="flex flex-col lg:flex-row items-center gap-12">
-                            <div className="lg:w-1/2">
-                                <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 relative overflow-hidden group hover:shadow-xl transition-shadow duration-300">
-                                    <div className="absolute top-0 right-0 w-32 h-32 bg-[#00A154]/10 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-                                    <img src="/Assets/email/images.png" alt="MailerLite Logo" className="h-16 mb-6 object-contain" />
-                                    <h3 className="text-2xl font-bold text-[#002044] mb-4">MailerLite</h3>
-                                    <p className="text-gray-600 leading-relaxed mb-6">
-                                        Advanced email marketing made simple. Connect your POS to MailerLite to automate your welcome emails, reward loyal customers, and design beautiful newsletters with an intuitive drag-and-drop editor.
-                                    </p>
-                                    <ul className="space-y-3">
-                                        <li className="flex items-center gap-3 text-gray-700">
-                                            <div className="w-2 h-2 rounded-full bg-[#00A154]"></div>
-                                            Intuitive drag-and-drop builder
-                                        </li>
-                                        <li className="flex items-center gap-3 text-gray-700">
-                                            <div className="w-2 h-2 rounded-full bg-[#00A154]"></div>
-                                            Landing page integration
-                                        </li>
-                                        <li className="flex items-center gap-3 text-gray-700">
-                                            <div className="w-2 h-2 rounded-full bg-[#00A154]"></div>
-                                            Subscriber management
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="lg:w-1/2">
-                                <motion.div
-                                    initial={{ opacity: 0, x: 20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    className="rounded-2xl overflow-hidden shadow-2xl"
-                                >
-                                    <img
-                                        src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1000&auto=format&fit=crop"
-                                        alt="MailerLite Integration"
-                                        className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
-                                    />
-                                </motion.div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* CTA Section */}
-            <div className="py-20 bg-gray-50">
-                <div className="max-w-4xl mx-auto px-4 text-center">
-                    <h2 className="text-3xl font-bold text-[#002044] mb-6">Ready to transform your customer relationships?</h2>
-                    <p className="text-gray-600 mb-8 text-lg">Start syncing your POS data with your favorite email marketing tools today.</p>
-                    <div className="flex justify-center gap-4">
-                        <button
-                            onClick={() => setIsContactSalesOpen(true)}
-                            className="px-8 py-3 bg-white text-[#002044] font-bold border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-                        >
-                            Contact Sales
-                        </button>
-                    </div>
-                </div>
-            </div>
+      <Section bg="grey" className="!py-14">
+        <div className="grid lg:grid-cols-12 gap-8 items-center">
+          <p className="lg:col-span-3 font-mono text-xs font-bold tracking-widest uppercase text-gray-500">Seamlessly Integrates With</p>
+          <div className="lg:col-span-9 grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {logos.map((l, i) => (
+              <Reveal key={l.alt} delay={i * 0.05} className="flex items-center justify-center rounded-xl bg-white p-6 h-28">
+                <img src={l.src} alt={l.alt} className="max-h-16 w-auto object-contain" loading="lazy" />
+              </Reveal>
+            ))}
+          </div>
         </div>
-    );
+      </Section>
+
+      {sections.map((s, i) => (
+        <React.Fragment key={s.title}>
+          <FeatureSection s={s} i={i} offset={1} total={sections.length} />
+          {i === 0 && <PhotoBand src="/images/email/desk.webp" alt="Email Campaign Dashboard" />}
+        </React.Fragment>
+      ))}
+
+      <Section bg="dark">
+        <Heading
+          center
+          dark
+          title="Seamless email marketing integrations (like Mailchimp, Zoho, and MailerLite) POS Integration"
+          sub="Transform your point-of-sale from a final transaction into a long-term connection by turning every receipt into a gateway for your email marketing funnel. By automatically capturing customer data at checkout, you transition from one-off sales to consistent, professional engagement that keeps your brand top-of-mind in your customer's inbox."
+          className="mb-14"
+        />
+        <BlockGrid items={integrations} cols={3} dark />
+      </Section>
+
+      <Section bg="white" className="!pb-0">
+        <Heading
+          center
+          eyebrow="Platforms"
+          title="Supported Platforms"
+          sub="We integrate seamlessly with the world's leading email marketing platforms to help you stay connected with your customers."
+        />
+      </Section>
+      {platforms.map((p, i) => (
+        <FeatureSection key={p.title} s={p} i={i} offset={1} total={platforms.length} />
+      ))}
+
+      <CtaBand
+        title="Ready to transform your customer relationships?"
+        text={<p>Start syncing your POS data with your favorite email marketing tools today.</p>}
+        actions={[{ label: 'Contact Sales', onClick: () => setIsContactSalesOpen(true) }]}
+      />
+    </div>
+  );
 };
 
 export default EmailCampaign;

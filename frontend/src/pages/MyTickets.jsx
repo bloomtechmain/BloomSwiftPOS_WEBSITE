@@ -56,7 +56,7 @@ const MyTickets = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 font-['Poppins'] pt-24 pb-20">
+        <div className="min-h-screen bg-grey-light pt-24 pb-20">
             <TicketFormModal
                 isOpen={isTicketModalOpen}
                 onClose={() => setIsTicketModalOpen(false)}
@@ -66,12 +66,12 @@ const MyTickets = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center mb-8">
                     <div>
-                        <h1 className="text-3xl font-bold text-[#002044]">My Tickets</h1>
+                        <h1 className="text-3xl font-bold text-navy">My Tickets</h1>
                         <p className="text-gray-600 mt-2">Track your support requests and inquiries</p>
                     </div>
                     <button
                         onClick={() => setIsTicketModalOpen(true)}
-                        className="bg-[#0055D4] hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors flex items-center gap-2"
+                        className="bg-navy hover:bg-navy-mid text-white font-semibold py-2 px-6 rounded-lg transition-colors flex items-center gap-2"
                     >
                         <Plus size={20} />
                         Submit a Ticket
@@ -80,7 +80,7 @@ const MyTickets = () => {
 
                 {loading ? (
                     <div className="flex justify-center items-center h-64">
-                        <div className="w-10 h-10 border-4 border-[#0055D4]/30 border-t-[#0055D4] rounded-full animate-spin"></div>
+                        <div className="w-10 h-10 border-4 border-navy/30 border-t-navy rounded-full animate-spin"></div>
                     </div>
                 ) : tickets.length === 0 ? (
                     <motion.div
@@ -91,13 +91,13 @@ const MyTickets = () => {
                         <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 text-gray-400">
                             <Ticket size={40} />
                         </div>
-                        <h3 className="text-xl font-bold text-[#002044] mb-2">No tickets found</h3>
+                        <h3 className="text-xl font-bold text-navy mb-2">No tickets found</h3>
                         <p className="text-gray-500 mb-8 max-w-md mx-auto">
                             You haven't submitted any support tickets yet. Need help? Submit a ticket and our team will get back to you.
                         </p>
                         <button
                             onClick={() => setIsTicketModalOpen(true)}
-                            className="text-[#0055D4] font-semibold hover:underline"
+                            className="text-navy font-semibold hover:underline"
                         >
                             Create your first ticket
                         </button>
@@ -115,7 +115,7 @@ const MyTickets = () => {
                                 <div className="flex flex-col md:flex-row justify-between md:items-start gap-4 mb-4">
                                     <div>
                                         <div className="flex items-center gap-3 mb-2">
-                                            <h3 className="text-xl font-bold text-[#002044]">{ticket.project_name}</h3>
+                                            <h3 className="text-xl font-bold text-navy">{ticket.project_name}</h3>
                                             <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(ticket.status)}`}>
                                                 {ticket.status}
                                             </span>
@@ -133,7 +133,7 @@ const MyTickets = () => {
                                     </div>
                                 </div>
 
-                                <div className="bg-gray-50 rounded-lg p-4 border border-gray-100">
+                                <div className="bg-grey-light rounded-lg p-4 border border-gray-100">
                                     <p className="text-gray-700 whitespace-pre-wrap">{ticket.message}</p>
                                 </div>
 

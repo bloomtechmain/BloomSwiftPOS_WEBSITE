@@ -124,14 +124,14 @@ const LiveChatModal = ({ isOpen, onClose, currentUser }) => {
                     >
                         <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md pointer-events-auto overflow-hidden flex flex-col h-[600px] max-h-[80vh]">
                             {/* Header */}
-                            <div className="bg-[#002044] p-4 text-white flex justify-between items-center shadow-md">
+                            <div className="bg-navy p-4 text-white flex justify-between items-center shadow-md">
                                 <div className="flex items-center gap-3">
                                     <div className="bg-green-500 p-2 rounded-full">
                                         <MessageCircle size={20} className="text-white" />
                                     </div>
                                     <div>
-                                        <h2 className="text-lg font-bold font-['Poppins']">Live Chat</h2>
-                                        <p className="text-blue-200 text-xs flex items-center gap-1">
+                                        <h2 className="text-lg font-bold">Live Chat</h2>
+                                        <p className="text-white/60 text-xs flex items-center gap-1">
                                             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
                                             Online
                                         </p>
@@ -146,19 +146,19 @@ const LiveChatModal = ({ isOpen, onClose, currentUser }) => {
                             </div>
 
                             {/* Chat Area */}
-                            <div className="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-4">
+                            <div className="flex-1 overflow-y-auto p-4 bg-grey-light space-y-4">
                                 {messages.map((msg) => (
                                     <div
                                         key={msg.id}
                                         className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                                     >
                                         <div className={`flex items-end max-w-[80%] gap-2 ${msg.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
-                                            <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${msg.sender === 'user' ? 'bg-[#FF7A00]' : 'bg-[#0055D4]'}`}>
+                                            <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${msg.sender === 'user' ? 'bg-brand-orange' : 'bg-navy'}`}>
                                                 {msg.sender === 'user' ? <User size={14} className="text-white" /> : <Bot size={14} className="text-white" />}
                                             </div>
                                             <div
                                                 className={`p-3 rounded-2xl text-sm ${msg.sender === 'user'
-                                                    ? 'bg-[#002044] text-white rounded-tr-none'
+                                                    ? 'bg-navy text-white rounded-tr-none'
                                                     : 'bg-white text-gray-800 border border-gray-100 shadow-sm rounded-tl-none'
                                                     }`}
                                             >
@@ -173,7 +173,7 @@ const LiveChatModal = ({ isOpen, onClose, currentUser }) => {
                                 {isTyping && (
                                     <div className="flex justify-start">
                                         <div className="flex items-end gap-2">
-                                            <div className="w-8 h-8 rounded-full bg-[#0055D4] flex items-center justify-center flex-shrink-0">
+                                            <div className="w-8 h-8 rounded-full bg-navy flex items-center justify-center flex-shrink-0">
                                                 <Bot size={14} className="text-white" />
                                             </div>
                                             <div className="bg-white border border-gray-100 shadow-sm p-3 rounded-2xl rounded-tl-none">
@@ -197,12 +197,12 @@ const LiveChatModal = ({ isOpen, onClose, currentUser }) => {
                                         value={newMessage}
                                         onChange={(e) => setNewMessage(e.target.value)}
                                         placeholder="Type your message..."
-                                        className="w-full pl-4 pr-12 py-3 bg-gray-100 border-none rounded-full focus:ring-2 focus:ring-[#0055D4] outline-none transition-all"
+                                        className="w-full pl-4 pr-12 py-3 bg-gray-100 border-none rounded-full focus:ring-2 focus:ring-navy outline-none transition-all"
                                     />
                                     <button
                                         type="submit"
                                         disabled={!newMessage.trim()}
-                                        className="absolute right-2 p-2 bg-[#0055D4] text-white rounded-full hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                                        className="absolute right-2 p-2 bg-navy text-white rounded-full hover:bg-navy-mid disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                                     >
                                         <Send size={18} />
                                     </button>

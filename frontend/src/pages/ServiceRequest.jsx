@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import API_URL from '../config/api';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useToast } from '../context/ToastContext';
+import { Eyebrow, Reveal, PrimaryButton, MediaFrame } from '../Components/kit';
 
 const ServiceRequest = () => {
   const location = useLocation();
@@ -112,59 +113,69 @@ const ServiceRequest = () => {
 
   if (!currentUser) {
     return (
-      <div className="min-h-[calc(100vh-80px)] bg-gray-50 flex items-center justify-center font-['Poppins']">
-        <div className="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full text-center">
-          <h1 className="text-2xl sm:text-3xl font-bold text-[#002044] mb-4">
-            Login required
-          </h1>
-          <p className="text-gray-600 mb-6">
-            You need to be logged in to submit a Request for POS.
-          </p>
-          <button
-            onClick={() => navigate('/')}
-            className="px-6 py-3 rounded-md bg-[#0055D4] text-white font-semibold hover:bg-blue-700 transition-colors"
-          >
-            Back to home
-          </button>
+      <section className="bg-grey-light min-h-[calc(100vh-80px)] flex items-center py-20">
+        <div className="w-full px-4 sm:px-8 lg:px-12 flex justify-center">
+          <div className="bg-white rounded-2xl shadow-[8px_8px_0_0_#101D36] p-8 lg:p-10 max-w-md w-full">
+            <Eyebrow>Request for POS</Eyebrow>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-navy mb-4">
+              Login required
+            </h1>
+            <p className="text-gray-600 mb-8">
+              You need to be logged in to submit a Request for POS.
+            </p>
+            <PrimaryButton onClick={() => navigate('/')}>Back to home</PrimaryButton>
+          </div>
         </div>
-      </div>
+      </section>
     );
   }
 
-  return (
-    <div className="min-h-[calc(100vh-80px)] bg-gray-50 flex items-center justify-center px-4 font-['Poppins']">
-      <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-[#002044] mb-2">
-          Request for POS
-        </h1>
-        <p className="text-sm sm:text-base text-gray-600 mb-6">
-          Submit your details and our team will contact you about your Bloom Swift POS solution.
-        </p>
+  const label = 'block font-mono text-[11px] font-bold tracking-widest uppercase text-gray-500 mb-2';
+  const input = 'w-full px-4 py-3.5 rounded-xl bg-grey-light border-0 text-navy placeholder:text-gray-400 focus:bg-white focus:ring-2 focus:ring-navy outline-none transition-all';
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+  return (
+    <section className="bg-grey-light py-20 lg:py-24">
+      <div className="w-full px-4 sm:px-8 lg:px-12 grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <Reveal className="lg:col-span-5">
+          <Eyebrow>Bloom Swift POS</Eyebrow>
+          <h1 className="text-4xl md:text-5xl font-extrabold leading-[1.08] tracking-tight text-navy">
+            Request for POS
+          </h1>
+          <p className="mt-6 text-lg text-gray-700 leading-relaxed max-w-xl">
+            Submit your details and our team will contact you about your Bloom Swift POS solution.
+          </p>
+          <div className="mt-10 hidden lg:block">
+            <MediaFrame src="/images/general/handshake.webp" alt="Business owner shaking hands with a Bloom Swift POS consultant" />
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.1} className="lg:col-span-7 bg-white rounded-2xl shadow-[8px_8px_0_0_#101D36] p-6 sm:p-8 lg:p-10">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="sr-username" className={label}>
               Username
             </label>
             <input
+              id="sr-username"
               type="text"
               name="username"
               value={form.username}
               readOnly
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-700 cursor-not-allowed"
+              className={`${input} !bg-gray-100 text-gray-500 cursor-not-allowed`}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="sr-servicetype" className={label}>
               Service type
             </label>
             <select
+              id="sr-servicetype"
               name="servicetype"
               value={form.servicetype}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF7A00] focus:border-transparent outline-none transition-all bg-white"
+              className={input}
             >
               <option value="">Select a service</option>
               <option value="Retail POS">Retail POS</option>
@@ -179,59 +190,66 @@ const ServiceRequest = () => {
             </select>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Company name
-            </label>
-            <input
-              type="text"
-              name="company_name"
-              value={form.company_name}
-              onChange={handleChange}
-              placeholder="Your business or company name"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF7A00] focus:border-transparent outline-none transition-all"
-            />
+          <div className="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label htmlFor="sr-company" className={label}>
+                Company name
+              </label>
+              <input
+                id="sr-company"
+                type="text"
+                name="company_name"
+                value={form.company_name}
+                onChange={handleChange}
+                placeholder="Your business or company name"
+                className={input}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="sr-contact" className={label}>
+                Contact number
+              </label>
+              <input
+                id="sr-contact"
+                type="tel"
+                name="contactnumber"
+                value={form.contactnumber}
+                onChange={handleChange}
+                required
+                placeholder="Phone number with country code if applicable"
+                className={input}
+              />
+            </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Contact number
-            </label>
-            <input
-              type="tel"
-              name="contactnumber"
-              value={form.contactnumber}
-              onChange={handleChange}
-              required
-              placeholder="Phone number with country code if applicable"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF7A00] focus:border-transparent outline-none transition-all"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="sr-info" className={label}>
               Additional information
             </label>
             <textarea
+              id="sr-info"
               name="additional_information"
               value={form.additional_information}
               onChange={handleChange}
               rows={4}
               placeholder="Tell us about your business and requirements"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF7A00] focus:border-transparent outline-none transition-all resize-none"
+              className={`${input} resize-none`}
             />
           </div>
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-[#FF7A00] text-white font-bold py-3 rounded-lg hover:bg-[#E66E00] transition-colors mt-2 disabled:opacity-70 disabled:cursor-not-allowed"
+            className="w-full inline-flex items-center justify-center gap-2.5 bg-brand-orange text-white font-bold py-4 rounded-xl hover:bg-brand-orange-dark transition-colors mt-2 disabled:opacity-70 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-orange"
           >
+            {isSubmitting && <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" aria-hidden="true" />}
             {isSubmitting ? 'Submitting...' : 'Submit request'}
           </button>
         </form>
+        </Reveal>
       </div>
-    </div>
+    </section>
   );
 };
 

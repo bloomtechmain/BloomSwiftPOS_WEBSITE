@@ -40,6 +40,7 @@ const AboutBloomSwiftPOS = lazy(() => import('./pages/AboutBloomSwiftPOS'))
 const SuccessStories = lazy(() => import('./pages/SuccessStories'))
 const UserProfile = lazy(() => import('./pages/UserProfile'))
 const Hardware = lazy(() => import('./pages/Hardware'))
+const Pricing = lazy(() => import('./pages/Pricing'))
 const Checkout = lazy(() => import('./pages/Checkout'))
 const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation'))
 const MyOrders = lazy(() => import('./pages/MyOrders'))
@@ -109,8 +110,10 @@ export default function App() {
             <Route path="/integrations/zoho-campaigns" element={<ZohoCampaigns />} />
             <Route path="/integrations/email-campaign" element={<EmailCampaign />} />
             <Route path="/support-centre" element={<SupportCentre />} />
+            <Route path="/contact" element={<SupportCentre />} />
             <Route path="/request-pos" element={<ServiceRequest />} />
             <Route path="/hardware" element={<Hardware />} />
+            <Route path="/pricing" element={<Pricing />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
             <Route path="/my-orders" element={<MyOrders />} />

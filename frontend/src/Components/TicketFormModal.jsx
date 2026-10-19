@@ -82,12 +82,12 @@ const TicketFormModal = ({ isOpen, onClose, onSuccess }) => {
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden"
+                        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-y-auto max-h-[calc(100dvh-2rem)]"
                     >
-                        <div className="bg-[#002044] p-6 text-white flex justify-between items-center">
+                        <div className="bg-navy p-6 text-white flex justify-between items-center">
                             <div>
                                 <h3 className="text-xl font-bold">Submit a Ticket</h3>
-                                <p className="text-blue-200 text-sm mt-1">We're here to help you</p>
+                                <p className="text-white/60 text-sm mt-1">We're here to help you</p>
                             </div>
                             <button
                                 onClick={onClose}
@@ -106,7 +106,7 @@ const TicketFormModal = ({ isOpen, onClose, onSuccess }) => {
                                     value={formData.name}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0055D4] focus:border-transparent outline-none transition-all"
+                                    className="w-full px-4 py-2 border border-transparent bg-grey-light rounded-xl focus:bg-white focus:ring-2 focus:ring-navy outline-none transition-all"
                                     placeholder="Enter your full name"
                                 />
                             </div>
@@ -119,7 +119,7 @@ const TicketFormModal = ({ isOpen, onClose, onSuccess }) => {
                                     value={formData.project_name}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0055D4] focus:border-transparent outline-none transition-all"
+                                    className="w-full px-4 py-2 border border-transparent bg-grey-light rounded-xl focus:bg-white focus:ring-2 focus:ring-navy outline-none transition-all"
                                     placeholder="e.g. Retail POS Setup"
                                 />
                             </div>
@@ -132,7 +132,7 @@ const TicketFormModal = ({ isOpen, onClose, onSuccess }) => {
                                     onChange={handleChange}
                                     required
                                     rows={4}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0055D4] focus:border-transparent outline-none transition-all resize-none"
+                                    className="w-full px-4 py-2 border border-transparent bg-grey-light rounded-xl focus:bg-white focus:ring-2 focus:ring-navy outline-none transition-all resize-none"
                                     placeholder="Describe your issue or question..."
                                 />
                             </div>
@@ -140,7 +140,7 @@ const TicketFormModal = ({ isOpen, onClose, onSuccess }) => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full bg-[#0055D4] hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed mt-2"
+                                className="w-full bg-navy hover:bg-navy-mid text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed mt-2"
                             >
                                 {loading ? (
                                     <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
