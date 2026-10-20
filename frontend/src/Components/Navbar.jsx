@@ -4,11 +4,10 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
 import { useUI } from '../context/UIContext';
-import { useCart } from '../context/CartContext';
 import {
     Car, Shirt, ShoppingBasket, Store,
     UtensilsCrossed, Scissors, Coffee, Hotel, Beer,
-    Pizza, Headset, Info, Award, Wrench, Ticket, ClipboardList, Croissant, ChevronDown, ShoppingCart, Cloud, ArrowRight, Menu, X
+    Pizza, Headset, Info, Award, Wrench, Ticket, ClipboardList, Croissant, ChevronDown, Cloud, ArrowRight, Menu, X
 } from 'lucide-react';
 import SignupForm from './SignupForm';
 import LoginForm from './LoginForm';
@@ -39,22 +38,6 @@ const DropdownLink = ({ to, icon: Icon, title, text, onClick }) => (
     </Link>
 );
 
-const CartButton = ({ count, onClick }) => (
-    <button
-        type="button"
-        onClick={onClick}
-        className="relative w-11 h-11 rounded-xl inline-flex items-center justify-center text-navy hover:bg-grey-light transition-colors"
-        aria-label="Shopping Cart"
-    >
-        <ShoppingCart size={22} />
-        {count > 0 && (
-            <span className="absolute top-1 right-1 bg-brand-orange text-white text-[10px] font-bold rounded-full min-w-[18px] min-h-[18px] flex items-center justify-center">
-                {count}
-            </span>
-        )}
-    </button>
-);
-
 const MobileGroupTitle = ({ children }) => (
     <h3 className="font-mono text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3">{children}</h3>
 );
@@ -62,7 +45,6 @@ const MobileGroupTitle = ({ children }) => (
 const Navbar = () => {
     const toast = useToast();
     const { isContactSalesOpen, setIsContactSalesOpen } = useUI();
-    const { getCartCount, toggleCart } = useCart();
     const navigate = useNavigate();
     const location = useLocation();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -321,8 +303,6 @@ const Navbar = () => {
                         </ul>
 
                         <div className="flex items-center gap-2">
-                            <CartButton count={getCartCount()} onClick={toggleCart} />
-
                             <button
                                 type="button"
                                 onClick={() => setIsContactSalesOpen(true)}
@@ -380,9 +360,8 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    {/* Mobile cart icon and menu button */}
+                    {/* Mobile menu button */}
                     <div className="xl:hidden flex items-center gap-1">
-                        <CartButton count={getCartCount()} onClick={toggleCart} />
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                             className="w-11 h-11 rounded-xl inline-flex items-center justify-center text-navy hover:bg-grey-light"

@@ -6,6 +6,7 @@ import { ToastProvider } from './context/ToastContext'
 import { UIProvider } from './context/UIContext'
 import { CartProvider } from './context/CartContext'
 import CartSidebar from './Components/CartSidebar'
+import FloatingCart from './Components/FloatingCart'
 
 // Eager load only critical components
 import Home from './pages/Home'
@@ -42,6 +43,7 @@ const UserProfile = lazy(() => import('./pages/UserProfile'))
 const Hardware = lazy(() => import('./pages/Hardware'))
 const Pricing = lazy(() => import('./pages/Pricing'))
 const Checkout = lazy(() => import('./pages/Checkout'))
+const Cart = lazy(() => import('./pages/Cart'))
 const OrderConfirmation = lazy(() => import('./pages/OrderConfirmation'))
 const MyOrders = lazy(() => import('./pages/MyOrders'))
 const MyTickets = lazy(() => import('./pages/MyTickets'))
@@ -72,6 +74,7 @@ const PublicLayout = () => {
       <CartSidebar />
       <Outlet />
       <Footer />
+      <FloatingCart />
     </>
   )
 }
@@ -114,6 +117,7 @@ export default function App() {
             <Route path="/request-pos" element={<ServiceRequest />} />
             <Route path="/hardware" element={<Hardware />} />
             <Route path="/pricing" element={<Pricing />} />
+            <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
             <Route path="/my-orders" element={<MyOrders />} />

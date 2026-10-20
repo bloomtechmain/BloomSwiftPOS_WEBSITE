@@ -51,7 +51,33 @@ exports.getHardware = async (req, res) => {
        ORDER BY created_at DESC`
     );
 
+    // ?lite=1 returns image URLs instead of inline base64 (used by the shop)
+    const lite = req.query.lite === '1' || req.query.lite === 'true';
+
     const rows = result.rows.map((row) => {
+      if (lite) {
+        const count = Array.isArray(row.images) && row.images.length > 0
+          ? row.images.length
+          : row.image ? 1 : 0;
+        const version = new Date(row.created_at).getTime();
+        const imageUrls = Array.from({ length: count }, (_, i) =>
+          `/api/hardware/${row.id}/image/${i}?v=${version}`
+        );
+
+        return {
+          id: row.id,
+          hardware_name: row.hardware_name,
+          brand: row.brand,
+          category: row.category,
+          price: row.price,
+          specs: row.specs,
+          additional_notes: row.additional_notes,
+          created_at: row.created_at,
+          image: imageUrls[0] || null,
+          images: imageUrls
+        };
+      }
+
       let imageDataUrl = null;
       if (row.image) {
         try {
@@ -95,6 +121,61 @@ exports.getHardware = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: 'Failed to fetch hardware list',
+      error: err.message
+    });
+  }
+};
+
+// Many stored images are labelled "image/*", so detect the real type from magic bytes
+const sniffImageType = (buf) => {
+  if (!buf || buf.length < 12) return null;
+  if (buf[0] === 0xff && buf[1] === 0xd8) return 'image/jpeg';
+  if (buf.toString('hex', 0, 4) === '89504e47') return 'image/png';
+  if (buf.toString('ascii', 0, 3) === 'GIF') return 'image/gif';
+  if (buf.toString('ascii', 0, 4) === 'RIFF' && buf.toString('ascii', 8, 12) === 'WEBP') return 'image/webp';
+  if (buf.toString('ascii', 4, 12) === 'ftypavif') return 'image/avif';
+  return null;
+};
+
+exports.getHardwareImage = async (req, res) => {
+  const { id, index } = req.params;
+  const imageIndex = Number.parseInt(index, 10) || 0;
+
+  try {
+    const result = await db.query('SELECT image, images FROM hardware WHERE id = $1', [id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ success: false, message: 'Hardware not found' });
+    }
+
+    const row = result.rows[0];
+    let contentType = 'image/jpeg';
+    let buffer = null;
+
+    if (Array.isArray(row.images) && row.images[imageIndex]) {
+      const match = /^data:([^;,]+)?(;base64)?,(.*)$/s.exec(row.images[imageIndex]);
+      if (match) {
+        if (match[1] && match[1] !== 'image/*') contentType = match[1];
+        buffer = match[2]
+          ? Buffer.from(match[3], 'base64')
+          : Buffer.from(decodeURIComponent(match[3]));
+      }
+    } else if (imageIndex === 0 && row.image) {
+      buffer = row.image;
+    }
+
+    if (!buffer) {
+      return res.status(404).json({ success: false, message: 'Image not found' });
+    }
+
+    res.set('Content-Type', sniffImageType(buffer) || contentType);
+    res.set('Cache-Control', 'public, max-age=86400');
+    return res.send(buffer);
+  } catch (err) {
+    console.error('Error fetching hardware image', err);
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to fetch hardware image',
       error: err.message
     });
   }

@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../context/ToastContext';
 import { ShoppingBag, CreditCard, Check, ArrowLeft, Loader } from 'lucide-react';
 import API_URL from '../config/api';
-
-const lkrFormatter = new Intl.NumberFormat('en-LK', {
-  style: 'currency',
-  currency: 'LKR'
-});
+import { SHIPPING_FEE, lkrFormatter } from '../config/shop';
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -124,7 +120,7 @@ const Checkout = () => {
         city: formData.city,
         postalCode: formData.postalCode,
         paymentMethod: formData.paymentMethod,
-        totalAmount: getCartTotal(),
+        totalAmount: getCartTotal() + SHIPPING_FEE,
         items: cart.map(item => ({
           hardwareId: item.id,
           hardwareName: item.hardware_name,
@@ -252,7 +248,7 @@ const Checkout = () => {
   };
 
   const cartTotal = getCartTotal();
-  const shippingFee = 500; // Fixed shipping fee
+  const shippingFee = SHIPPING_FEE;
   const grandTotal = cartTotal + shippingFee;
 
   return (
@@ -506,10 +502,15 @@ const Checkout = () => {
           {/* Order Summary Sidebar */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-sm p-6 sticky top-24">
-              <h2 className="text-xl font-bold text-navy mb-4 flex items-center gap-2">
-                <ShoppingBag size={24} />
-                Order Summary
-              </h2>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold text-navy flex items-center gap-2">
+                  <ShoppingBag size={24} />
+                  Order Summary
+                </h2>
+                <Link to="/cart" className="text-sm font-bold text-navy hover:text-brand-orange-dark">
+                  Edit cart
+                </Link>
+              </div>
 
               <div className="space-y-4 mb-6">
                 {cart.map((item) => (

@@ -1,27 +1,41 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const CartContext = createContext(null);
+const STORAGE_KEY = 'bloomSwiftCart';
+
+// Keep only what the cart needs. Product images used to be stored inline as
+// base64, which quickly blew past the localStorage quota.
+const toCartItem = (item, quantity) => {
+  const image = item.images?.[0] || item.image || null;
+  return {
+    id: item.id,
+    hardware_name: item.hardware_name,
+    brand: item.brand || null,
+    category: item.category || null,
+    price: Number(item.price) || 0,
+    image: image && !image.startsWith('data:') ? image : null,
+    quantity,
+  };
+};
+
+const loadCart = () => {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    return Array.isArray(saved) ? saved.map((item) => toCartItem(item, item.quantity || 1)) : [];
+  } catch (error) {
+    console.error('Error loading cart from localStorage:', error);
+    return [];
+  }
+};
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(loadCart);
   const [isCartOpen, setIsCartOpen] = useState(false);
-
-  // Load cart from localStorage on mount
-  useEffect(() => {
-    try {
-      const savedCart = localStorage.getItem('bloomSwiftCart');
-      if (savedCart) {
-        setCart(JSON.parse(savedCart));
-      }
-    } catch (error) {
-      console.error('Error loading cart from localStorage:', error);
-    }
-  }, []);
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
     try {
-      localStorage.setItem('bloomSwiftCart', JSON.stringify(cart));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
     } catch (error) {
       console.error('Error saving cart to localStorage:', error);
     }
@@ -30,7 +44,7 @@ export const CartProvider = ({ children }) => {
   const addToCart = (item, quantity = 1) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((cartItem) => cartItem.id === item.id);
-      
+
       if (existingItem) {
         return prevCart.map((cartItem) =>
           cartItem.id === item.id
@@ -38,8 +52,8 @@ export const CartProvider = ({ children }) => {
             : cartItem
         );
       }
-      
-      return [...prevCart, { ...item, quantity }];
+
+      return [...prevCart, toCartItem(item, quantity)];
     });
   };
 
@@ -52,7 +66,7 @@ export const CartProvider = ({ children }) => {
       removeFromCart(itemId);
       return;
     }
-    
+
     setCart((prevCart) =>
       prevCart.map((item) =>
         item.id === itemId ? { ...item, quantity } : item
@@ -64,9 +78,13 @@ export const CartProvider = ({ children }) => {
     setCart([]);
   };
 
+  const getItemQuantity = (itemId) => {
+    return cart.find((item) => item.id === itemId)?.quantity || 0;
+  };
+
   const getCartTotal = () => {
     return cart.reduce((total, item) => {
-      const price = item.price || 0;
+      const price = Number(item.price) || 0;
       return total + price * item.quantity;
     }, 0);
   };
@@ -88,6 +106,7 @@ export const CartProvider = ({ children }) => {
         removeFromCart,
         updateQuantity,
         clearCart,
+        getItemQuantity,
         getCartTotal,
         getCartCount,
         openCart,

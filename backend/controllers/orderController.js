@@ -121,8 +121,8 @@ exports.createOrder = async (req, res) => {
         <tr>
           <td style="padding: 12px; border-bottom: 1px solid #e0e0e0;">${item.hardwareName}</td>
           <td style="padding: 12px; border-bottom: 1px solid #e0e0e0; text-align: center;">${item.quantity}</td>
-          <td style="padding: 12px; border-bottom: 1px solid #e0e0e0; text-align: right;">$${parseFloat(item.price).toFixed(2)}</td>
-          <td style="padding: 12px; border-bottom: 1px solid #e0e0e0; text-align: right;">$${(parseFloat(item.price) * item.quantity).toFixed(2)}</td>
+          <td style="padding: 12px; border-bottom: 1px solid #e0e0e0; text-align: right;">LKR ${parseFloat(item.price).toFixed(2)}</td>
+          <td style="padding: 12px; border-bottom: 1px solid #e0e0e0; text-align: right;">LKR ${(parseFloat(item.price) * item.quantity).toFixed(2)}</td>
         </tr>
       `).join('');
 
@@ -194,7 +194,7 @@ exports.createOrder = async (req, res) => {
 
               <!-- Total -->
               <div style="background-color: #002044; color: white; padding: 20px; border-radius: 8px; text-align: right;">
-                <p style="margin: 0; font-size: 24px; font-weight: bold;">Total: $${parseFloat(totalAmount).toFixed(2)}</p>
+                <p style="margin: 0; font-size: 24px; font-weight: bold;">Total: LKR ${parseFloat(totalAmount).toFixed(2)}</p>
               </div>
 
               <!-- Footer -->
