@@ -75,7 +75,6 @@ const Cart = () => {
                         <p className="font-mono text-[10px] font-bold tracking-widest uppercase text-gray-400">{item.category}</p>
                       )}
                       <h2 className="font-bold text-navy leading-snug">{item.hardware_name}</h2>
-                      {item.brand && <p className="text-xs text-gray-500">{item.brand}</p>}
                       <p className="text-sm text-gray-600 mt-1">{formatLKR(item.price)} each</p>
                     </div>
                   </div>

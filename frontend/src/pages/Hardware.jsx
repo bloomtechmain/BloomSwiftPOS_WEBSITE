@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
   ShoppingCart, Search, X, Plus, Minus, Truck, ShieldCheck, Headset,
-  PackageSearch, Eye, SlidersHorizontal, MessageSquare
+  PackageSearch, Eye, SlidersHorizontal, MessageSquare, ChevronDown
 } from 'lucide-react';
-import { PageHero } from '../Components/kit';
+import { Reveal, Eyebrow, Actions } from '../Components/kit';
 import API_URL from '../config/api';
 import { CATEGORY_ORDER, formatLKR, resolveImage } from '../config/shop';
 import { useCart } from '../context/CartContext';
@@ -25,7 +25,7 @@ const TRUST_ITEMS = [
   { icon: Headset, title: 'Setup support', text: 'Our team helps you get running' },
 ];
 
-const hasPrice = (item) => item.price != null && item.price !== '';
+const hasPrice =(item) => item.price != null && item.price !== '';
 
 const sortCategories = (a, b) => {
   const indexA = CATEGORY_ORDER.indexOf(a);
@@ -140,7 +140,6 @@ const ProductCard = ({ item, onQuickView, onAdd, onRequestQuote }) => {
             {item.hardware_name}
           </button>
         </h3>
-        {item.brand && <p className="text-sm text-gray-500 mt-0.5">{item.brand}</p>}
       </div>
 
       <div className="mt-4">
@@ -264,7 +263,6 @@ const ProductModal = ({ item, onClose, onAdd, onBuyNow, onRequestQuote }) => {
             <h2 id="product-modal-title" className="mt-2 text-2xl sm:text-3xl font-extrabold text-navy leading-tight pr-10">
               {item.hardware_name}
             </h2>
-            {item.brand && <p className="mt-1 text-gray-500">by {item.brand}</p>}
 
             <p className={`mt-5 font-extrabold text-navy ${priced ? 'text-3xl' : 'text-lg'}`}>
               {priced ? formatLKR(item.price) : 'Price on request'}
@@ -344,6 +342,9 @@ const Hardware = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selected, setSelected] = useState(null);
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const categoryMenuRef = useRef(null);
+  const reduceMotion = useReducedMotion();
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
@@ -439,6 +440,27 @@ const Hardware = () => {
     navigate('/checkout');
   };
 
+  // Close the category popup on outside click or Escape
+  useEffect(() => {
+    if (!categoriesOpen) return undefined;
+    const onPointerDown = (e) => {
+      if (!categoryMenuRef.current?.contains(e.target)) setCategoriesOpen(false);
+    };
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setCategoriesOpen(false);
+    };
+    document.addEventListener('mousedown', onPointerDown);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', onPointerDown);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [categoriesOpen]);
+
+  const scrollToProducts = () => {
+    document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const handleRequestQuote = () => {
     setSelected(null);
     openContactSales();
@@ -450,8 +472,12 @@ const Hardware = () => {
       <button
         key={name}
         type="button"
-        onClick={() => setParam('category', name, 'All')}
-        aria-pressed={active}
+        onClick={() => {
+          setParam('category', name, 'All');
+          setCategoriesOpen(false);
+        }}
+        role="option"
+        aria-selected={active}
         className={`flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold text-left whitespace-nowrap transition-colors ${
           active ? 'bg-navy text-white' : 'text-navy hover:bg-grey-light'
         }`}
@@ -464,42 +490,62 @@ const Hardware = () => {
 
   return (
     <div className="bg-white">
-      <PageHero
-        breadcrumb={[{ label: 'Home', to: '/' }, { label: 'Shop Hardware' }]}
-        title="Bloom Swift POS hardware"
-        text={<p>Explore POS terminals, printers and accessories that work perfectly with Bloom Swift POS.</p>}
-        image={{ src: '/images/general/pos-counter.webp', alt: 'POS terminal and receipt printer on a shop counter' }}
-      >
-        <ul className="mt-10 grid sm:grid-cols-3 gap-4">
-          {TRUST_ITEMS.map(({ icon: Icon, title, text }) => (
-            <li key={title} className="flex items-center gap-3">
-              <span className="w-10 h-10 flex-shrink-0 rounded-lg bg-white/10 flex items-center justify-center text-brand-orange">
-                <Icon size={20} aria-hidden="true" />
-              </span>
-              <span>
-                <span className="block text-sm font-bold">{title}</span>
-                <span className="block text-xs text-white/60">{text}</span>
-              </span>
-            </li>
-          ))}
-        </ul>
-      </PageHero>
+      <section className="relative bg-navy text-white overflow-hidden">
+        {/* Decorative background: dot grid + soft glows */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 opacity-[0.07] [background-image:radial-gradient(#fff_1px,transparent_1px)] [background-size:22px_22px]"
+        />
+        <div aria-hidden="true" className="absolute -top-32 -right-24 w-[480px] h-[480px] rounded-full bg-brand-orange/25 blur-[120px]" />
+        <div aria-hidden="true" className="absolute -bottom-40 -left-32 w-[420px] h-[420px] rounded-full bg-navy-soft/60 blur-[120px]" />
 
-      <div className="w-full px-4 sm:px-8 lg:px-12 py-8 lg:py-12">
-        <div className="lg:grid lg:grid-cols-[240px_1fr] lg:gap-10">
-          {/* Category sidebar (desktop) */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-28">
-              <h2 className="font-mono text-[11px] font-bold tracking-widest uppercase text-gray-400 mb-3 flex items-center gap-2">
-                <SlidersHorizontal size={14} aria-hidden="true" /> Categories
-              </h2>
-              <div className="flex flex-col gap-1">
-                {categoryButton('All', hardware.length)}
-                {categories.map((c) => categoryButton(c, categoryCounts[c]))}
-              </div>
-            </div>
-          </aside>
+        <div className="relative w-full px-4 sm:px-8 lg:px-12 py-12 lg:py-16">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            <Reveal className="lg:col-span-7">
+              <nav aria-label="Breadcrumb" className="text-sm text-white/45 mb-6 flex flex-wrap gap-2">
+                <Link to="/" className="hover:text-white">Home</Link>
+                <span aria-hidden="true">/</span>
+                <span className="text-white/70">Shop Hardware</span>
+              </nav>
+              <Eyebrow dark>Bloom Swift POS shop</Eyebrow>
+              <h1 className="text-4xl md:text-5xl xl:text-6xl font-extrabold leading-[1.08] tracking-tight">
+                Shop the hardware <span className="text-brand-orange">you need.</span>
+              </h1>
+              <p className="mt-6 text-lg text-white/75 leading-relaxed max-w-xl">
+                POS terminals, printers and accessories that work perfectly with Bloom Swift POS.
+              </p>
+              <Actions
+                dark
+                className="mt-8"
+                actions={[
+                  { label: 'Browse products', onClick: scrollToProducts },
+                  { label: 'Talk to sales', onClick: openContactSales },
+                ]}
+              />
+            </Reveal>
 
+            <Reveal as="ul" delay={0.1} className="lg:col-span-5 grid sm:grid-cols-3 lg:grid-cols-1 gap-3 lg:gap-4">
+              {TRUST_ITEMS.map(({ icon: Icon, title, text }) => (
+                <li
+                  key={title}
+                  className="flex items-center gap-4 rounded-xl bg-white/5 border border-white/10 p-4 lg:p-5 backdrop-blur-sm"
+                >
+                  <span className="w-12 h-12 flex-shrink-0 rounded-lg bg-brand-orange/15 flex items-center justify-center text-brand-orange">
+                    <Icon size={22} aria-hidden="true" />
+                  </span>
+                  <span>
+                    <span className="block font-bold">{title}</span>
+                    <span className="block text-sm text-white/60">{text}</span>
+                  </span>
+                </li>
+              ))}
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <div id="products" className="w-full px-4 sm:px-8 lg:px-12 py-8 lg:py-12 scroll-mt-24">
+        <div>
           <div className="min-w-0">
             {/* Toolbar */}
             <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
@@ -514,6 +560,48 @@ const Hardware = () => {
                   className="w-full h-12 pl-11 pr-4 rounded-xl bg-grey-light border border-transparent focus:bg-white focus:border-navy focus:outline-none text-navy placeholder:text-gray-400"
                 />
               </label>
+              <div ref={categoryMenuRef} className="relative">
+                <button
+                  type="button"
+                  onClick={() => setCategoriesOpen((open) => !open)}
+                  aria-haspopup="listbox"
+                  aria-expanded={categoriesOpen}
+                  aria-controls="category-menu"
+                  className={`w-full sm:w-auto h-12 px-4 rounded-xl inline-flex items-center justify-center gap-2 font-semibold whitespace-nowrap border transition-colors ${
+                    categoriesOpen ? 'bg-navy border-navy text-white' : 'bg-grey-light border-transparent text-navy hover:border-navy'
+                  }`}
+                >
+                  <SlidersHorizontal size={16} aria-hidden="true" />
+                  {activeCategory === 'All' ? 'All categories' : activeCategory}
+                  <ChevronDown
+                    size={16}
+                    aria-hidden="true"
+                    className={`transition-transform duration-200 ${categoriesOpen ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                <AnimatePresence>
+                  {categoriesOpen && (
+                    <motion.div
+                      id="category-menu"
+                      role="listbox"
+                      aria-label="Categories"
+                      initial={reduceMotion ? false : { opacity: 0, y: -8, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: 0.98 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute z-30 mt-2 left-0 sm:left-auto sm:right-0 w-full sm:w-72 origin-top rounded-xl bg-white border border-border-grey shadow-[8px_8px_0_0_#101D36] p-2"
+                    >
+                      <p className="px-3 pt-2 pb-2 font-mono text-[11px] font-bold tracking-widest uppercase text-gray-400">
+                        Categories
+                      </p>
+                      <div className="flex flex-col gap-1 max-h-[60vh] overflow-y-auto">
+                        {categoryButton('All', hardware.length)}
+                        {categories.map((c) => categoryButton(c, categoryCounts[c]))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
               <label className="flex items-center gap-2">
                 <span className="text-sm text-gray-500 whitespace-nowrap">Sort by</span>
                 <select
@@ -526,26 +614,6 @@ const Hardware = () => {
                   ))}
                 </select>
               </label>
-            </div>
-
-            {/* Category chips (mobile) */}
-            <div className="lg:hidden mt-4 -mx-4 px-4 flex gap-2 overflow-x-auto pb-1">
-              {['All', ...categories].map((c) => {
-                const active = activeCategory === c;
-                return (
-                  <button
-                    key={c}
-                    type="button"
-                    onClick={() => setParam('category', c, 'All')}
-                    aria-pressed={active}
-                    className={`flex-shrink-0 rounded-full px-4 py-2 text-sm font-semibold border transition-colors ${
-                      active ? 'bg-navy border-navy text-white' : 'border-border-grey text-navy hover:border-navy'
-                    }`}
-                  >
-                    {c}
-                  </button>
-                );
-              })}
             </div>
 
             {/* Results summary */}
@@ -576,7 +644,7 @@ const Hardware = () => {
               </div>
             )}
 
-            <div className="grid gap-5 lg:gap-6 grid-cols-1 min-[480px]:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 mt-6 lg:mt-0">
+            <div className="grid gap-5 lg:gap-6 grid-cols-1 min-[480px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mt-6 lg:mt-0">
               {loading
                 ? Array.from({ length: 8 }, (_, i) => <SkeletonCard key={i} />)
                 : products.map((item) => (

@@ -2,7 +2,7 @@ import React from 'react';
 import { Phone, Mail, Globe } from 'lucide-react';
 import { PageHero, PhotoBand, CtaBand } from '../Components/kit';
 import { OfflinePlans, OfflineComparison, CloudPlans } from '../Components/PricingBlocks';
-import { offline, PRICING_PHONE, PRICING_PHONE_HREF } from '../data/pricing';
+import { offline, cloud, PRICING_PHONE, PRICING_PHONE_HREF } from '../data/pricing';
 import useRequestPos from '../hooks/useRequestPos';
 
 const Pricing = () => {
@@ -11,19 +11,19 @@ const Pricing = () => {
     <div className="bg-white">
       <PageHero
         breadcrumb={[{ label: 'Home', to: '/' }, { label: 'Pricing' }]}
-        eyebrow={offline.tagline}
-        title={<>{offline.headline[0]} <span className="text-brand-orange">{offline.headline[1]}</span></>}
-        text={<p>{offline.intro}</p>}
+        eyebrow="Cloud · Offline"
+        title={<>Cloud POS from Rs. {cloud.plans[0].price} a month, <span className="text-brand-orange">or own it outright.</span></>}
+        text={<p>Start on a monthly cloud plan with no setup fees and cancel anytime, or pay once for the offline desktop edition that runs on your own PC. Either way, we set it up and train your staff.</p>}
         actions={[
           { label: PRICING_PHONE, href: PRICING_PHONE_HREF },
-          { label: 'Cloud plans', href: '#cloud' },
+          { label: 'Offline plans', href: '#offline' },
         ]}
         image={{ src: '/images/general/pos-counter.webp', alt: 'Point of sale terminal on a shop counter' }}
       />
+      <CloudPlans />
+      <PhotoBand src="/images/general/touchscreen-till.webp" alt="Cashier using a touchscreen till" />
       <OfflinePlans compact />
       <OfflineComparison />
-      <PhotoBand src="/images/general/touchscreen-till.webp" alt="Cashier using a touchscreen till" />
-      <CloudPlans bg="white" />
       <CtaBand
         eyebrow="Get started"
         title={offline.cta}

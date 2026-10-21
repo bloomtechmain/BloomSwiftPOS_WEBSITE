@@ -111,7 +111,6 @@ const CartSidebar = () => {
                         <div className="flex items-start justify-between gap-2">
                           <div className="min-w-0">
                             <h3 className="text-sm font-bold text-navy leading-snug">{item.hardware_name}</h3>
-                            {item.brand && <p className="text-xs text-gray-500 mt-0.5">{item.brand}</p>}
                           </div>
                           <button
                             type="button"
